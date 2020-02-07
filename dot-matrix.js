@@ -148,6 +148,26 @@ class DotMatrix {
         }
     }
 
+    // -webkit-transition: ${this.timing.fromHome || 'ease'} transform ${this.duration.fromHome || '0.1s'};
+    // -webkit-transition: ${this.timing.fromHome || 'ease'} -webkit-transform ${this.duration.fromHome || '0.1s'};
+    // -o-transition: ${this.timing.fromHome || 'ease'} transform ${this.duration.fromHome || '0.1s'};
+    // transition: ${this.timing.fromHome || 'ease'} transform ${this.duration.fromHome || '0.1s'};
+    // -webkit-transition: ${this.timing.backHome || 'ease'} transform ${this.duration.backHome || '1s'};
+    // -webkit-transition: ${this.timing.backHome || 'ease'} -webkit-transform ${this.duration.backHome || '1s'};
+    // -o-transition: ${this.timing.backHome || 'ease'} transform ${this.duration.backHome || '1s'};
+    // transition: ${this.timing.backHome || 'ease'} transform ${this.duration.backHome || '1s'};
+
+    // circle {
+    //     transition-timing-function: ${this.timing.fromHome || 'ease'};
+    //     transition-property: transform;
+    //     transition-duration: ${this.duration.fromHome || '0.1s'};
+    // }
+    // circle.animate_going_home {
+    //     transition-timing-function: ${this.timing.backHome || 'ease'};
+    //     transition-property: transform;
+    //     transition-duration: ${this.duration.backHome || '1s'};
+    // }
+
     injectCss() {
         const existingStyleTag = document.querySelector('.dot-matrix-style');
         const styleDeclaration = `
@@ -156,18 +176,31 @@ class DotMatrix {
                 display: block;
             }
             circle {
-                -webkit-transition: ${this.timing.fromHome || 'ease'} transform ${this.duration.fromHome || '0.1s'};
-                -webkit-transition: ${this.timing.fromHome || 'ease'} -webkit-transform ${this.duration.fromHome || '0.1s'};
-                -o-transition: ${this.timing.fromHome || 'ease'} transform ${this.duration.fromHome || '0.1s'};
-                transition: ${this.timing.fromHome || 'ease'} transform ${this.duration.fromHome || '0.1s'};
+                -webkit-transition-timing-function: ease;
+                     -o-transition-timing-function: ease;
+                        transition-timing-function: ease;
+                -webkit-transition-property: -webkit-transform;
+                transition-property: -webkit-transform;
+                -o-transition-property: transform;
+                transition-property: transform;
+                transition-property: transform, -webkit-transform;
+                -webkit-transition-duration: 0.1s;
+                     -o-transition-duration: 0.1s;
+                        transition-duration: 0.1s;
             }
             circle.animate_going_home {
-                -webkit-transition: ${this.timing.backHome || 'ease'} transform ${this.duration.backHome || '1s'};
-                -webkit-transition: ${this.timing.backHome || 'ease'} -webkit-transform ${this.duration.backHome || '1s'};
-                -o-transition: ${this.timing.backHome || 'ease'} transform ${this.duration.backHome || '1s'};
-                transition: ${this.timing.backHome || 'ease'} transform ${this.duration.backHome || '1s'};
+                -webkit-transition-timing-function: ease;
+                     -o-transition-timing-function: ease;
+                        transition-timing-function: ease;
+                -webkit-transition-property: -webkit-transform;
+                transition-property: -webkit-transform;
+                -o-transition-property: transform;
+                transition-property: transform;
+                transition-property: transform, -webkit-transform;
+                -webkit-transition-duration: 1s;
+                     -o-transition-duration: 1s;
+                        transition-duration: 1s;
             }
-
         `;
 
         if (existingStyleTag) {
