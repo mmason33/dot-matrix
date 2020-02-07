@@ -26,6 +26,7 @@ class DotMatrix {
             DISTANCE_TO_STEP: 10,
             DELAY_BEFORE_GOING_HOME: 500,
             DOT_RADIUS: 2,
+            DOT_FILL_COLOR: 'black',
             CSS_CLASS_GOING_HOME: 'animate_going_home',
         };
         this.transitions = args.transitions || {
@@ -130,6 +131,7 @@ class DotMatrix {
                         DISTANCE_TO_STEP: this.dotConfig.DISTANCE_TO_STEP,
                         DELAY_BEFORE_GOING_HOME: this.dotConfig.DELAY_BEFORE_GOING_HOME,
                         DOT_RADIUS: this.dotConfig.DOT_RADIUS,
+                        DOT_FILL_COLOR: this.dotConfig.DOT_FILL_COLOR === 'random' ? '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6) : this.dotConfig.DOT_FILL_COLOR,
                         CSS_CLASS_GOING_HOME: this.dotConfig.CSS_CLASS_GOING_HOME,
                     }
                 );

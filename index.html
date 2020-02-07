@@ -12,33 +12,63 @@
                 margin: 0;
                 padding: 0;
             }
+
+            div {
+                position: relative;
+                text-align: center;
+                margin-top: 50px;
+            }
+
+            svg {
+                display: inline-block !important;
+                position: relative;
+            }
+
+            .controls {
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: 10px;
+                z-index: 9999;
+            }
+
+            input {
+                display: block;
+            }
         </style>
     </head>
     <body>
-        <div style="margin: 10px auto 0;">
-            <svg class="dot-matrix" width="100%" height="100%">
-                <!-- <circle class="ease-in animate_going_home" cx="28.500000000000014" cy="20" r="2" fill="black" transform="translate(0, 0)">
-                </circle>
-                <text x="28.500000000000014" y="20" text-anchor="middle" stroke="#51c5cf" stroke-width="2px" dy=".3em">E</text> -->
-            </svg>
+        <div class="controls">
+            <input type="text" name="spacing" placeholder="spacing" value=""/>
+            <input type="text" name="padding" placeholder="padding" value=""/>
+            <input type="text" name="rows" placeholder="rows" value=""/>
+            <input type="text" name="columns" placeholder="columns" value=""/>
+            <input type="text" name="backgroundColor" placeholder="backgroundColor" value=""/>
+            <input type="text" name="dotRadius" placeholder="dotRadius" value=""/>
+            <input type="text" name="dotFillColor" placeholder="dotFillColor" value=""/>
+            <button class="update-options">Update</button>
+        </div>
+        <div>
+            <svg class="dot-matrix" width="100%" height="100%"></svg>
         </div>
         <script src="coordinate-translator.js"></script>
         <script src="smart-dot.js"></script>
         <script src="dot-matrix.js"></script>
         <script>
-            new DotMatrix(
+           const matrix = new DotMatrix(
                 document.querySelector('.dot-matrix'),
                 {
                     padding: 20,
                     spacing: 20,
-                    rows: 20,
-                    columns: 20,
-                    svgBackgroundColor: 'lightgrey',
+                    rows: 50,
+                    columns: 50,
+                    svgBackgroundColor: 'black',
                     dotConfig: {
                         DISTANCE_TO_FEAR: 50,
                         DISTANCE_TO_STEP: 10,
                         DELAY_BEFORE_GOING_HOME: 500,
-                        DOT_RADIUS: 2,
+                        DOT_RADIUS: 5,
+                        DOT_FILL_COLOR: 'random',
                         CSS_CLASS_GOING_HOME: 'animate_going_home',
                     },
                     transitions: {
@@ -53,6 +83,40 @@
                     },
                 }
             );
+
+            document.querySelector('.update-options').addEventListener('click', (e) => {
+                e.preventDefault();
+                delete matrix;
+                const spacing = document.querySelector('input[name="spacing"]').value || 20;
+                const padding = document.querySelector('input[name="padding"]').value || 20;
+                const columns = document.querySelector('input[name="columns"]').value || 50;
+                const rows = document.querySelector('input[name="rows"]').value || 50;
+                const backgroundColor = document.querySelector('input[name="backgroundColor"]').value || 'black';
+                const dotRadius = document.querySelector('input[name="dotRadius"]').value || 5;
+                const dotFillColor = document.querySelector('input[name="dotFillColor"]').value || 'random';
+
+                const svg = document.querySelector('.dot-matrix');
+                svg.innerHTML = '';
+
+                new DotMatrix(
+                    svg,
+                    {
+                        padding,
+                        spacing,
+                        rows,
+                        columns,
+                        svgBackgroundColor: backgroundColor,
+                        dotConfig: {
+                            DOT_RADIUS: dotRadius,
+                            DOT_FILL_COLOR: dotFillColor,
+                            DISTANCE_TO_FEAR: 50,
+                            DISTANCE_TO_STEP: 10,
+                            DELAY_BEFORE_GOING_HOME: 500,
+                            CSS_CLASS_GOING_HOME: 'animate_going_home',
+                        },
+                    }
+                )
+            });
         </script>
     </body>
 </html>

@@ -5,6 +5,7 @@ class SmartDot {
         this.DISTANCE_TO_STEP = args.DISTANCE_TO_STEP;
         this.DELAY_BEFORE_GOING_HOME = args.DELAY_BEFORE_GOING_HOME;
         this.DOT_RADIUS = args.DOT_RADIUS;
+        this.DOT_FILL_COLOR = args.DOT_FILL_COLOR
         this.CSS_CLASS_GOING_HOME = args.CSS_CLASS_GOING_HOME;
         this.UNIQUE_IDENTIFIER = args.UNIQUE_IDENTIFIER;
 
@@ -30,7 +31,7 @@ class SmartDot {
         circle.setAttribute('cx', this.coordinates.home.x);
         circle.setAttribute('cy', this.coordinates.home.y);
         circle.setAttribute('r', this.DOT_RADIUS);
-        circle.setAttribute('fill', 'black');
+        circle.setAttribute('fill', this.DOT_FILL_COLOR);
         circle.setAttribute('transform', 'translate(0, 0)');
         this.dot = circle;
         this.svg.appendChild(this.dot);
@@ -41,15 +42,23 @@ class SmartDot {
     }
 
     delegate_mousemove(event) {
+        // Helps with performance
         event.stopPropagation();
         event.preventDefault();
-        const mouse_coord = { x: event.x, y: event.y };
+        // Layer values to find the x y of the relative parent instead of the window
+        const mouse_coord = {
+            x: event.layerX,
+            y: event.layerY,
+        };
+
+        // Static method
         const vector_from_mouse_to_me = (new CoordinateTranslator).setCenterCoordinate(mouse_coord).getVectorToPoint(this.coordinates.current);
+
         if (!this.isMouseNearMe(vector_from_mouse_to_me)) {
             this.goHome();
             return false;
         }
-        //  console.log('Mouse is near');   //  Debugging Only
+
         this.dot.classList.remove(this.CSS_CLASS_GOING_HOME);
         //  Get Where I Should Go - Absolute Position
         const move_to_coords_absolute = (new CoordinateTranslator)
