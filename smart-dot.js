@@ -35,6 +35,21 @@ class SmartDot {
         circle.setAttribute('r', this.DOT_RADIUS);
         circle.setAttribute('fill', this.DOT_FILL_COLOR);
         circle.setAttribute('transform', 'translate(0, 0)');
+        // <animateTransform attributeName="transform"
+        // attributeType="XML"
+        // type="rotate"
+        // from="0 60 70"
+        // to="360 60 70"
+        // dur="10s"
+        // repeatCount="indefinite"/>
+
+        if (!this.IS_DESKTOP) {
+            const animateTransform = document.createElementNS('http://www.w3.org/2000/svg', 'animateTransform');
+            animateTransform.setAttribute('from', `${this.coordinates.home.x} ${this.coordinates.home.y}`);
+            animateTransform.setAttribute('dur', '1s');
+            animateTransform.setAttribute('type', 'translate');
+            circle.appendChild(animateTransform);
+        }
         this.dot = circle;
         this.svg.appendChild(this.dot);
     }
@@ -70,8 +85,8 @@ class SmartDot {
 
     delegate_touchmove(event){
         // Save our poor CPU
-        // event.stopPropagation();
-        // event.preventDefault();
+        event.stopPropagation();
+        event.preventDefault();
         // console.log(event);	//	Debugging Only
         const touch	=	event.touches[0];
         this.respondToInput({
@@ -104,6 +119,7 @@ class SmartDot {
         this.coordinates.current.y = absolute_coords.y;
         //  Relative Position
         this.dot.setAttribute('transform', `translate(${delta_coords.dx}, ${delta_coords.dy})`);
+        this.dot.querySelector('animateTransform').setAttribute('to', `${delta_coords.dx} ${delta_coords.dy}`);
     }
 
     goHome() {
