@@ -5,9 +5,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Dot Matrix🔥</title>
+        <style>
+            html,
+            body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+        </style>
     </head>
     <body>
-        <svg class="dot-matrix" width="100%" height="100%"></svg>
+        <div style="margin: 10px auto 0;">
+            <svg class="dot-matrix" width="100%" height="100%">
+                <!-- <circle class="ease-in animate_going_home" cx="28.500000000000014" cy="20" r="2" fill="black" transform="translate(0, 0)">
+                </circle>
+                <text x="28.500000000000014" y="20" text-anchor="middle" stroke="#51c5cf" stroke-width="2px" dy=".3em">E</text> -->
+            </svg>
+        </div>
         <script src="coordinate-translator.js"></script>
         <script src="smart-dot.js"></script>
         <script src="dot-matrix.js"></script>
@@ -15,10 +29,10 @@
             new DotMatrix(
                 document.querySelector('.dot-matrix'),
                 {
-                    padding: 50,
+                    padding: 20,
                     spacing: 20,
-                    rows: 40,
-                    columns: 40,
+                    rows: 20,
+                    columns: 20,
                     svgBackgroundColor: 'lightgrey',
                     dotConfig: {
                         DISTANCE_TO_FEAR: 50,
