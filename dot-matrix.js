@@ -156,11 +156,16 @@ class DotMatrix {
                 display: block;
             }
             circle {
+                -webkit-transition: ${this.timing.fromHome || 'ease'} transform ${this.duration.fromHome || '0.1s'};
+                -o-transition: ${this.timing.fromHome || 'ease'} transform ${this.duration.fromHome || '0.1s'};
                 transition: ${this.timing.fromHome || 'ease'} transform ${this.duration.fromHome || '0.1s'};
             }
-            circle.${this.CSS_CLASS_GOING_HOME} {
+            circle.animate_going_home {
+                -webkit-transition: ${this.timing.backHome || 'ease'} transform ${this.duration.backHome || '1s'};
+                -o-transition: ${this.timing.backHome || 'ease'} transform ${this.duration.backHome || '1s'};
                 transition: ${this.timing.backHome || 'ease'} transform ${this.duration.backHome || '1s'};
             }
+
         `;
 
         if (existingStyleTag) {
