@@ -116,7 +116,7 @@
         <script src="dot-matrix.js"></script>
         <script>
             (() => {
-                if (!window.innerWidth <= 991) {
+                if (window.innerWidth <= 991) {
                     const controls = document.querySelector('.controls');
                     controls.remove();
                     const wrapper = document.querySelector('.wrapper');
