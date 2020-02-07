@@ -187,7 +187,6 @@ class DotMatrix {
                 -webkit-transition-duration: 0.1s;
                      -o-transition-duration: 0.1s;
                         transition-duration: 0.1s;
-                        transition-delay: 0.2s;
             }
             circle.animate_going_home {
                 -webkit-transition-timing-function: ease;
@@ -201,7 +200,6 @@ class DotMatrix {
                 -webkit-transition-duration: 1s;
                      -o-transition-duration: 1s;
                         transition-duration: 1s;
-                        transition-delay: 2s;
             }
         `;
 

@@ -103,7 +103,7 @@ class SmartDot {
         this.coordinates.current.x = absolute_coords.x;
         this.coordinates.current.y = absolute_coords.y;
         //  Relative Position
-        this.dot.setAttribute('transform', `translate(${delta_coords.dx}, ${delta_coords.dy})`);
+        this.dot.setAttribute('style', `transform: translate(${delta_coords.dx}, ${delta_coords.dy})`);
     }
 
     goHome() {
