@@ -70,8 +70,8 @@ class SmartDot {
 
     delegate_touchmove(event){
         // Save our poor CPU
-        event.stopPropagation();
-        event.preventDefault();
+        // event.stopPropagation();
+        // event.preventDefault();
         // console.log(event);	//	Debugging Only
         const touch	=	event.touches[0];
         this.respondToInput({
