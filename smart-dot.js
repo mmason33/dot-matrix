@@ -34,7 +34,7 @@ class SmartDot {
         circle.setAttribute('cy', this.coordinates.home.y);
         circle.setAttribute('r', this.DOT_RADIUS);
         circle.setAttribute('fill', this.DOT_FILL_COLOR);
-        // circle.setAttribute('transform', 'translate(0, 0)');
+        circle.setAttribute('transform', 'translate(0, 0)');
         this.dot = circle;
         this.svg.appendChild(this.dot);
     }
@@ -103,7 +103,7 @@ class SmartDot {
         this.coordinates.current.x = absolute_coords.x;
         this.coordinates.current.y = absolute_coords.y;
         //  Relative Position
-        this.dot.setAttribute('style', `transform: translate(${delta_coords.dx}, ${delta_coords.dy})`);
+        this.dot.setAttribute('transform', `translate(${delta_coords.dx}, ${delta_coords.dy})`);
     }
 
     goHome() {

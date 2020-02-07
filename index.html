@@ -56,6 +56,14 @@
         <div class="controls">
             <p>Dot Count: <span class="count"></span></p>
             <br>
+            <label for="height">height
+                <input type="text" name="height" placeholder="height" value="0"/>
+            </label>
+
+            <label for="width">width
+                <input type="text" name="width" placeholder="width" value="0"/>
+            </label>
+
             <label for="spacing">spacing
                 <input type="range" min="0" max="1000" name="spacing" placeholder="spacing" value="50"/>
             </label>
@@ -97,7 +105,6 @@
             </label>
             <br>
             <p>Example Presets</p>
-            <br>
             <button class="moderate_dots_spacing">moderate_dots_spacing</button>
             <button class="tenK_smalls_dots">tenK_smalls_dots</button>
             <button class="spaced_large_dots">spaced_large_dots</button>
@@ -355,8 +362,10 @@
                 document.addEventListener('matrix_reload', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log(e.detail);
+
                     delete matrix;
+                    const height = parseInt(document.querySelector('input[name="height"]').value);
+                    const width = parseInt(document.querySelector('input[name="width"]').value);
                     const spacing = parseInt(document.querySelector('input[name="spacing"]').value);
                     const padding = parseInt(document.querySelector('input[name="padding"]').value);
                     const columns = parseInt(document.querySelector('input[name="columns"]').value) || 1;

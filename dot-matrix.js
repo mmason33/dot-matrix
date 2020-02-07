@@ -187,6 +187,7 @@ class DotMatrix {
                 -webkit-transition-duration: 0.1s;
                      -o-transition-duration: 0.1s;
                         transition-duration: 0.1s;
+                        transform-origin: 50% 50%;
             }
             circle.animate_going_home {
                 -webkit-transition-timing-function: ease;
