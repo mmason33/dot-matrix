@@ -34,7 +34,7 @@ class SmartDot {
         circle.setAttribute('cy', this.coordinates.home.y);
         circle.setAttribute('r', this.DOT_RADIUS);
         circle.setAttribute('fill', this.DOT_FILL_COLOR);
-        circle.setAttribute('transform', 'translate(0, 0)');
+        // circle.setAttribute('transform', 'translate(0, 0)');
         this.dot = circle;
         this.svg.appendChild(this.dot);
     }
