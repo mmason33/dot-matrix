@@ -8,6 +8,8 @@ class SmartDot {
         this.DOT_FILL_COLOR = args.DOT_FILL_COLOR
         this.CSS_CLASS_GOING_HOME = args.CSS_CLASS_GOING_HOME;
         this.UNIQUE_IDENTIFIER = args.UNIQUE_IDENTIFIER;
+        this.IS_DESKTOP = args.IS_DESKTOP;
+        this.EVENT_TYPE = this.IS_DESKTOP ? 'mousemove' : 'touchmove';
 
         // Beginning home coordinates => Object passed by reference so the property values need to referenced and retrieved
         this.coordinates = {
@@ -37,22 +39,9 @@ class SmartDot {
         this.svg.appendChild(this.dot);
     }
 
-    addEventListeners() {
-        this.svg.addEventListener('mousemove', this.delegate_mousemove.bind(this), false);
-    }
-
-    delegate_mousemove(event) {
-        // Helps with performance
-        event.stopPropagation();
-        event.preventDefault();
-        // Layer values to find the x y of the relative parent instead of the window
-        const mouse_coord = {
-            x: event.layerX,
-            y: event.layerY,
-        };
-
+    respondToInput(coordinate) {
         // Static method
-        const vector_from_mouse_to_me = (new CoordinateTranslator).setCenterCoordinate(mouse_coord).getVectorToPoint(this.coordinates.current);
+        const vector_from_mouse_to_me = (new CoordinateTranslator).setCenterCoordinate(coordinate).getVectorToPoint(this.coordinates.current);
 
         if (!this.isMouseNearMe(vector_from_mouse_to_me)) {
             this.goHome();
@@ -74,6 +63,34 @@ class SmartDot {
         this.setWhereIShouldBe(move_to_coords_relative, move_to_coords_absolute);
     }
 
+    addEventListeners(){
+        const methodName = `delegate_${this.EVENT_TYPE}`;
+        this.svg.addEventListener(this.EVENT_TYPE ,this[methodName].bind(this),false);
+    }
+
+    delegate_touchmove(event){
+        // Save our poor CPU
+        event.stopPropagation();
+        event.preventDefault();
+        // console.log(event);	//	Debugging Only
+        const touch	=	event.touches[0];
+        this.respondToInput({
+            x: touch.clientX,
+            y: touch.clientY
+        });
+    }
+
+    delegate_mousemove(event){
+        // Save our poor CPU
+        event.stopPropagation();
+        event.preventDefault();
+        // console.log(event);	//	Debugging Only
+        this.respondToInput({
+            x: event.layerX,
+            y: event.layerY
+        });
+    }
+
     isMouseNearMe(vector_from_mouse_to_me) {
         if (vector_from_mouse_to_me.radius < this.DISTANCE_TO_FEAR ) {
             return true;
@@ -90,6 +107,12 @@ class SmartDot {
     }
 
     goHome() {
+        if (this.DELAY_BEFORE_GOING_HOME === false) {
+            this.dot.classList.add(this.CSS_CLASS_GOING_HOME);
+            this.setWhereIShouldBe({ dx: 0, dy: 0 }, this.coordinates.home);
+            return false;
+        }
+
         if (this[`timeout_return_home_${this.UNIQUE_IDENTIFIER}`]) clearTimeout(this[`timeout_return_home_${this.UNIQUE_IDENTIFIER}`]);
         this[`timeout_return_home_${this.UNIQUE_IDENTIFIER}`] = setTimeout((() => {
             this.dot.classList.add(this.CSS_CLASS_GOING_HOME);
