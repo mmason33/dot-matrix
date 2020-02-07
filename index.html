@@ -35,7 +35,6 @@
                 z-index: 9999;
                 background-color: white;
                 text-align: left;
-                /* min-width: ; */
             }
 
             label {
@@ -116,176 +115,171 @@
         <script src="smart-dot.js"></script>
         <script src="dot-matrix.js"></script>
         <script>
-            if (!window.innerWidth >= 992) {
-                new DotMatrix(
-                    document.querySelector('.dot-matrix'),
-                    {
-                        padding: 18,
-                        spacing: 29,
-                        rows: 19,
-                        columns: 9,
-                        svgBackgroundColor: "white",
-                        DOT_RADIUS: 5,
-                        DOT_FILL_COLOR: "random",
-                        DISTANCE_TO_FEAR: 100,
-                        DISTANCE_TO_STEP: 10,
-                        DELAY_BEFORE_GOING_HOME: 200,
-                        CSS_CLASS_GOING_HOME: "animate_going_home",
+            (() => {
+                if (!window.innerWidth <= 991) {
+                    const controls = document.querySelector('.controls');
+                    controls.remove();
+                    const wrapper = document.querySelector('.wrapper');
+                    wrapper.style.margin = 0;
+                    const svg = document.querySelector('.dot-matrix');
+                    svg.style.border = 'none';
+                    new DotMatrix(
+                        svg,
+                        {
+                            padding: 18,
+                            spacing: 18,
+                            // rows: 19,
+                            // columns: 9,
+                            height: window.innerHeight,
+                            width: window.innerWidth,
+                            svgBackgroundColor: "white",
+                            DOT_RADIUS: 5,
+                            DOT_FILL_COLOR: "random",
+                            DISTANCE_TO_FEAR: 100,
+                            DISTANCE_TO_STEP: 10,
+                            DELAY_BEFORE_GOING_HOME: 200,
+                            CSS_CLASS_GOING_HOME: "animate_going_home",
+                            timing: {
+                                fromHome: "ease",
+                                backHome: "ease"
+                            },
+                            duration: {
+                                fromHome: "0.1s",
+                                backHome: "1s"
+                            }
+                        }
+                    );
+
+                    return false;
+                }
+
+
+                window.moderate_dots_spacing = {
+                    padding: 50,
+                    spacing: 50,
+                    rows: 10,
+                    columns: 30,
+                    svgBackgroundColor: 'white',
+                    DISTANCE_TO_FEAR: 100,
+                    DISTANCE_TO_STEP: 30,
+                    DELAY_BEFORE_GOING_HOME: 200,
+                    DOT_RADIUS: 5,
+                    DOT_FILL_COLOR: 'random',
+                    CSS_CLASS_GOING_HOME: 'animate_going_home',
+                    transitions: {
                         timing: {
-                            fromHome: "ease",
-                            backHome: "ease"
+                            fromHome: 'ease',
+                            backHome: 'ease',
                         },
                         duration: {
-                            fromHome: "0.1s",
-                            backHome: "1s"
-                        }
-                    }
-                )
-            }
+                            fromHome: '0.1s',
+                            backHome: '1s',
+                        },
+                    },
+                };
 
-            window.moderate_dots_spacing = {
-                padding: 50,
-                spacing: 50,
-                rows: 10,
-                columns: 30,
-                svgBackgroundColor: 'white',
-                DISTANCE_TO_FEAR: 100,
-                DISTANCE_TO_STEP: 30,
-                DELAY_BEFORE_GOING_HOME: 200,
-                DOT_RADIUS: 5,
-                DOT_FILL_COLOR: 'random',
-                CSS_CLASS_GOING_HOME: 'animate_going_home',
-                transitions: {
-                    timing: {
-                        fromHome: 'ease',
-                        backHome: 'ease',
+                window.tenK_smalls_dots = {
+                    padding: 10,
+                    spacing: 10,
+                    rows: 100,
+                    columns: 100,
+                    svgBackgroundColor: 'white',
+                    DISTANCE_TO_FEAR: 100,
+                    DISTANCE_TO_STEP: 30,
+                    DELAY_BEFORE_GOING_HOME: 200,
+                    DOT_RADIUS: 2,
+                    DOT_FILL_COLOR: 'random',
+                    CSS_CLASS_GOING_HOME: 'animate_going_home',
+                    transitions: {
+                        timing: {
+                            fromHome: 'ease',
+                            backHome: 'ease',
+                        },
+                        duration: {
+                            fromHome: '0.1s',
+                            backHome: '1s',
+                        },
                     },
-                    duration: {
-                        fromHome: '0.1s',
-                        backHome: '1s',
+                };
+
+                window.spaced_large_dots = {
+                    padding: 50,
+                    spacing: 120,
+                    rows: 5,
+                    columns: 5,
+                    svgBackgroundColor: 'white',
+                    DISTANCE_TO_FEAR: 100,
+                    DISTANCE_TO_STEP: 30,
+                    DELAY_BEFORE_GOING_HOME: 200,
+                    DOT_RADIUS: 50,
+                    DOT_FILL_COLOR: 'random',
+                    CSS_CLASS_GOING_HOME: 'animate_going_home',
+                    transitions: {
+                        timing: {
+                            fromHome: 'ease',
+                            backHome: 'ease',
+                        },
+                        duration: {
+                            fromHome: '0.1s',
+                            backHome: '1s',
+                        },
                     },
-                },
-            };
-            window.tenK_smalls_dots = {
-                padding: 10,
-                spacing: 10,
-                rows: 100,
-                columns: 100,
-                svgBackgroundColor: 'white',
-                DISTANCE_TO_FEAR: 100,
-                DISTANCE_TO_STEP: 30,
-                DELAY_BEFORE_GOING_HOME: 200,
-                DOT_RADIUS: 2,
-                DOT_FILL_COLOR: 'random',
-                CSS_CLASS_GOING_HOME: 'animate_going_home',
-                transitions: {
-                    timing: {
-                        fromHome: 'ease',
-                        backHome: 'ease',
+                };
+
+                window.spaced_medium_dots = {
+                    padding: 50,
+                    spacing: 50,
+                    rows: 10,
+                    columns: 30,
+                    svgBackgroundColor: 'white',
+                    DISTANCE_TO_FEAR: 50,
+                    DISTANCE_TO_STEP: 30,
+                    DELAY_BEFORE_GOING_HOME: 200,
+                    DOT_RADIUS: 20,
+                    DOT_FILL_COLOR: 'random',
+                    CSS_CLASS_GOING_HOME: 'animate_going_home',
+                    transitions: {
+                        timing: {
+                            fromHome: 'ease',
+                            backHome: 'ease',
+                        },
+                        duration: {
+                            fromHome: '0.1s',
+                            backHome: '1s',
+                        },
                     },
-                    duration: {
-                        fromHome: '0.1s',
-                        backHome: '1s',
+                }
+
+                window.dense_group = {
+                    padding: 50,
+                    spacing: 20,
+                    rows: 20,
+                    columns: 20,
+                    svgBackgroundColor: 'white',
+                    DISTANCE_TO_FEAR: 25,
+                    DISTANCE_TO_STEP: 10,
+                    DELAY_BEFORE_GOING_HOME: 200,
+                    DOT_RADIUS: 20,
+                    DOT_FILL_COLOR: 'random',
+                    CSS_CLASS_GOING_HOME: 'animate_going_home',
+                    transitions: {
+                        timing: {
+                            fromHome: 'ease',
+                            backHome: 'ease',
+                        },
+                        duration: {
+                            fromHome: '0.1s',
+                            backHome: '1s',
+                        },
                     },
-                },
-            };
-            window.spaced_large_dots = {
-                padding: 50,
-                spacing: 120,
-                rows: 5,
-                columns: 5,
-                svgBackgroundColor: 'white',
-                DISTANCE_TO_FEAR: 100,
-                DISTANCE_TO_STEP: 30,
-                DELAY_BEFORE_GOING_HOME: 200,
-                DOT_RADIUS: 50,
-                DOT_FILL_COLOR: 'random',
-                CSS_CLASS_GOING_HOME: 'animate_going_home',
-                transitions: {
-                    timing: {
-                        fromHome: 'ease',
-                        backHome: 'ease',
-                    },
-                    duration: {
-                        fromHome: '0.1s',
-                        backHome: '1s',
-                    },
-                },
-            };
-            window.spaced_medium_dots = {
-                padding: 50,
-                spacing: 50,
-                rows: 10,
-                columns: 30,
-                svgBackgroundColor: 'white',
-                DISTANCE_TO_FEAR: 50,
-                DISTANCE_TO_STEP: 30,
-                DELAY_BEFORE_GOING_HOME: 200,
-                DOT_RADIUS: 20,
-                DOT_FILL_COLOR: 'random',
-                CSS_CLASS_GOING_HOME: 'animate_going_home',
-                transitions: {
-                    timing: {
-                        fromHome: 'ease',
-                        backHome: 'ease',
-                    },
-                    duration: {
-                        fromHome: '0.1s',
-                        backHome: '1s',
-                    },
-                },
-            }
-            window.dense_group = {
-                padding: 50,
-                spacing: 20,
-                rows: 20,
-                columns: 20,
-                svgBackgroundColor: 'white',
-                DISTANCE_TO_FEAR: 25,
-                DISTANCE_TO_STEP: 10,
-                DELAY_BEFORE_GOING_HOME: 200,
-                DOT_RADIUS: 20,
-                DOT_FILL_COLOR: 'random',
-                CSS_CLASS_GOING_HOME: 'animate_going_home',
-                transitions: {
-                    timing: {
-                        fromHome: 'ease',
-                        backHome: 'ease',
-                    },
-                    duration: {
-                        fromHome: '0.1s',
-                        backHome: '1s',
-                    },
-                },
-            };
-            let timeout;
-            const count = document.querySelector('.count');
-            count.innerHTML = 30 * 10;
-            const config = document.querySelector('.config');
-            config.innerHTML = JSON.stringify({
-                padding: 50,
-                spacing: 50,
-                rows: 10,
-                columns: 30,
-                svgBackgroundColor: 'white',
-                DISTANCE_TO_FEAR: 100,
-                DISTANCE_TO_STEP: 10,
-                DELAY_BEFORE_GOING_HOME: 200,
-                DOT_RADIUS: 5,
-                DOT_FILL_COLOR: 'random',
-                CSS_CLASS_GOING_HOME: 'animate_going_home',
-                timing: {
-                    fromHome: 'ease',
-                    backHome: 'ease',
-                },
-                duration: {
-                    fromHome: '0.1s',
-                    backHome: '1s',
-                },
-            }, undefined, 2)
-            const matrix = new DotMatrix(
-                document.querySelector('.dot-matrix'),
-                {
+                };
+
+                let timeout;
+                const count = document.querySelector('.count');
+                count.innerHTML = 30 * 10;
+                const config = document.querySelector('.config');
+
+                config.innerHTML = JSON.stringify({
                     padding: 50,
                     spacing: 50,
                     rows: 10,
@@ -305,91 +299,81 @@
                         fromHome: '0.1s',
                         backHome: '1s',
                     },
-                }
-            );
-
-            Array.from(document.querySelectorAll('input')).forEach(input => {
-                if (input.type === 'range') {
-                    input.addEventListener('change', () => {
-                        document.dispatchEvent(new CustomEvent('matrix_reload'));
-                    });
-                    return false;
-                }
-
-                input.addEventListener('keyup', () => {
-                    if (timeout) clearTimeout(timeout);
-                    timeout = setTimeout(() => {
-                        document.dispatchEvent(new CustomEvent('matrix_reload'));
-                    }, 250)
-                });
-            });
-
-            Array.from(document.querySelectorAll('button')).forEach(button => {
-                button.addEventListener('click', () => {
-                    document.dispatchEvent(new CustomEvent('matrix_reload', {
-                        detail: {
-                            config: button.classList.value,
-                        }
-                    }));
-                });
-            });
-
-            document.addEventListener('matrix_reload', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log(e.detail);
-                delete matrix;
-                const spacing = parseInt(document.querySelector('input[name="spacing"]').value);
-                const padding = parseInt(document.querySelector('input[name="padding"]').value);
-                const columns = parseInt(document.querySelector('input[name="columns"]').value) || 1;
-                const rows = parseInt(document.querySelector('input[name="rows"]').value) || 1;
-                const fear = parseInt(document.querySelector('input[name="fear-distance"]').value);
-                const delay = parseInt(document.querySelector('input[name="delay"]').value);
-                const step = parseInt(document.querySelector('input[name="step-distance"]').value);
-
-                const backgroundColor = document.querySelector('input[name="backgroundColor"]').value || 'white';
-                const dotRadius = parseInt(document.querySelector('input[name="dotRadius"]').value);
-                const dotFillColor = document.querySelector('input[name="dotFillColor"]').value || 'random';
-
-                const wrapper = document.querySelector('.wrapper');
-                const svg = document.querySelector('.dot-matrix');
-                const config = document.querySelector('.config');
-                count.innerHTML = rows * columns;
-                config.innerHTML = JSON.stringify({
-                    padding,
-                    spacing,
-                    rows,
-                    columns,
-                    svgBackgroundColor: backgroundColor,
-                    DOT_RADIUS: dotRadius,
-                    DOT_FILL_COLOR: dotFillColor,
-                    DISTANCE_TO_FEAR: fear,
-                    DISTANCE_TO_STEP: step,
-                    DELAY_BEFORE_GOING_HOME: !!delay === false ? false : delay,
-                    CSS_CLASS_GOING_HOME: 'animate_going_home',
-                    timing: {
-                        fromHome: 'ease',
-                        backHome: 'ease',
-                    },
-                    duration: {
-                        fromHome: '0.1s',
-                        backHome: '1s',
-                    },
                 }, undefined, 2);
-                svg.remove();
-                const newSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                newSvg.classList = 'dot-matrix';
-                wrapper.appendChild(newSvg);
 
-                if (e.detail) {
-                    console.log(window[e.detail.config]);
-                    new DotMatrix(newSvg, window[e.detail.config]);
-                    return false;
-                }
-
-                new DotMatrix(
-                    newSvg,
+                const matrix = new DotMatrix(
+                    document.querySelector('.dot-matrix'),
                     {
+                        padding: 50,
+                        spacing: 50,
+                        rows: 10,
+                        columns: 30,
+                        svgBackgroundColor: 'white',
+                        DISTANCE_TO_FEAR: 100,
+                        DISTANCE_TO_STEP: 10,
+                        DELAY_BEFORE_GOING_HOME: 200,
+                        DOT_RADIUS: 5,
+                        DOT_FILL_COLOR: 'random',
+                        CSS_CLASS_GOING_HOME: 'animate_going_home',
+                        timing: {
+                            fromHome: 'ease',
+                            backHome: 'ease',
+                        },
+                        duration: {
+                            fromHome: '0.1s',
+                            backHome: '1s',
+                        },
+                    }
+                );
+
+                Array.from(document.querySelectorAll('input')).forEach(input => {
+                    if (input.type === 'range') {
+                        input.addEventListener('change', () => {
+                            document.dispatchEvent(new CustomEvent('matrix_reload'));
+                        });
+                        return false;
+                    }
+
+                    input.addEventListener('keyup', () => {
+                        if (timeout) clearTimeout(timeout);
+                        timeout = setTimeout(() => {
+                            document.dispatchEvent(new CustomEvent('matrix_reload'));
+                        }, 250)
+                    });
+                });
+
+                Array.from(document.querySelectorAll('button')).forEach(button => {
+                    button.addEventListener('click', () => {
+                        document.dispatchEvent(new CustomEvent('matrix_reload', {
+                            detail: {
+                                config: button.classList.value,
+                            }
+                        }));
+                    });
+                });
+
+                document.addEventListener('matrix_reload', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log(e.detail);
+                    delete matrix;
+                    const spacing = parseInt(document.querySelector('input[name="spacing"]').value);
+                    const padding = parseInt(document.querySelector('input[name="padding"]').value);
+                    const columns = parseInt(document.querySelector('input[name="columns"]').value) || 1;
+                    const rows = parseInt(document.querySelector('input[name="rows"]').value) || 1;
+                    const fear = parseInt(document.querySelector('input[name="fear-distance"]').value);
+                    const delay = parseInt(document.querySelector('input[name="delay"]').value);
+                    const step = parseInt(document.querySelector('input[name="step-distance"]').value);
+
+                    const backgroundColor = document.querySelector('input[name="backgroundColor"]').value || 'white';
+                    const dotRadius = parseInt(document.querySelector('input[name="dotRadius"]').value);
+                    const dotFillColor = document.querySelector('input[name="dotFillColor"]').value || 'random';
+
+                    const wrapper = document.querySelector('.wrapper');
+                    const svg = document.querySelector('.dot-matrix');
+                    const config = document.querySelector('.config');
+                    count.innerHTML = rows * columns;
+                    config.innerHTML = JSON.stringify({
                         padding,
                         spacing,
                         rows,
@@ -409,9 +393,44 @@
                             fromHome: '0.1s',
                             backHome: '1s',
                         },
+                    }, undefined, 2);
+                    svg.remove();
+                    const newSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                    newSvg.classList = 'dot-matrix';
+                    wrapper.appendChild(newSvg);
+
+                    if (e.detail) {
+                        console.log(window[e.detail.config]);
+                        new DotMatrix(newSvg, window[e.detail.config]);
+                        return false;
                     }
-                )
-            });
+
+                    new DotMatrix(
+                        newSvg,
+                        {
+                            padding,
+                            spacing,
+                            rows,
+                            columns,
+                            svgBackgroundColor: backgroundColor,
+                            DOT_RADIUS: dotRadius,
+                            DOT_FILL_COLOR: dotFillColor,
+                            DISTANCE_TO_FEAR: fear,
+                            DISTANCE_TO_STEP: step,
+                            DELAY_BEFORE_GOING_HOME: !!delay === false ? false : delay,
+                            CSS_CLASS_GOING_HOME: 'animate_going_home',
+                            timing: {
+                                fromHome: 'ease',
+                                backHome: 'ease',
+                            },
+                            duration: {
+                                fromHome: '0.1s',
+                                backHome: '1s',
+                            },
+                        }
+                    )
+                });
+            })();
         </script>
     </body>
 </html>
