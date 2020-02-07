@@ -5,54 +5,413 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Dot Matrix🔥</title>
+        <link href="https://fonts.googleapis.com/css?family=Cutive+Mono&display=swap" rel="stylesheet">
         <style>
             html,
             body {
                 height: 100%;
                 margin: 0;
                 padding: 0;
+                font-family: 'Cutive Mono', monospace;
+            }
+
+            div {
+                position: relative;
+                text-align: center;
+                margin-top: 50px;
+            }
+
+            svg {
+                display: inline-block !important;
+                position: relative;
+                border: 1px solid lightgrey;
+            }
+
+            .controls {
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: 5px;
+                z-index: 9999;
+                background-color: white;
+                text-align: left;
+                /* min-width: ; */
+            }
+
+            label {
+                display: block;
+                text-transform: uppercase;
+                padding: 10px 0;
+            }
+
+            input {
+                margin-left: 5px;
+            }
+
+            button {
+                display: block;
             }
         </style>
     </head>
     <body>
-        <div style="margin: 10px auto 0;">
-            <svg class="dot-matrix" width="100%" height="100%">
-                <!-- <circle class="ease-in animate_going_home" cx="28.500000000000014" cy="20" r="2" fill="black" transform="translate(0, 0)">
-                </circle>
-                <text x="28.500000000000014" y="20" text-anchor="middle" stroke="#51c5cf" stroke-width="2px" dy=".3em">E</text> -->
-            </svg>
+        <div class="controls">
+            <p>Dot Count: <span class="count"></span></p>
+            <br>
+            <label for="spacing">spacing
+                <input type="range" min="0" max="1000" name="spacing" placeholder="spacing" value="50"/>
+            </label>
+
+            <label for="padding">padding
+                <input type="range" min="0" name="padding" placeholder="padding" value="50"/>
+            </label>
+
+            <label for="rows">rows
+                <input type="range" min="0" max="200" name="rows" placeholder="rows" value="10"/>
+            </label>
+
+            <label for="columns">columns
+                <input type="range" min="0" max="200" name="columns" placeholder="columns" value="30"/>
+            </label>
+
+            <label for="delay">delay
+                <input type="range" min="0" max="10000" name="delay" placeholder="delay" value="200"/>
+            </label>
+
+            <label for="step-distance">step distance
+                <input type="range" min="10" max="1000" name="step-distance" placeholder="step distance" value="10"/>
+            </label>
+
+            <label for="fear-distance">fear distance
+                <input type="range" min="0" max="1000" name="fear-distance" placeholder="fear distance" value="100"/>
+            </label>
+
+            <label for="backgroundColor">backgroundColor
+                <input type="text" name="backgroundColor" placeholder="HEX or string" value=""/>
+            </label>
+
+            <label for="dotRadius">dotRadius
+                <input type="range" min="1" name="dotRadius" placeholder="dotRadius" value="5"/>
+            </label>
+
+            <label for="dotFillColor">dotFillColor
+                <input type="text" name="dotFillColor" placeholder="HEX or string" value=""/>
+            </label>
+            <br>
+            <p>Example Presets</p>
+            <br>
+            <button class="moderate_dots_spacing">moderate_dots_spacing</button>
+            <button class="tenK_smalls_dots">tenK_smalls_dots</button>
+            <button class="spaced_large_dots">spaced_large_dots</button>
+            <button class="spaced_medium_dots">spaced_medium_dots</button>
+            <button class="dense_group">dense_group</button>
+            <br>
+            <p>Config Object(In JSON)</p>
+            <pre class="config"></pre>
+
+        </div>
+        <div class="wrapper">
+            <svg class="dot-matrix" width="100%" height="100%"></svg>
         </div>
         <script src="coordinate-translator.js"></script>
         <script src="smart-dot.js"></script>
         <script src="dot-matrix.js"></script>
         <script>
-            new DotMatrix(
-                document.querySelector('.dot-matrix'),
-                {
-                    padding: 20,
-                    spacing: 20,
-                    rows: 20,
-                    columns: 20,
-                    svgBackgroundColor: 'lightgrey',
-                    dotConfig: {
-                        DISTANCE_TO_FEAR: 50,
+            if (!window.innerWidth >= 992) {
+                new DotMatrix(
+                    document.querySelector('.dot-matrix'),
+                    {
+                        padding: 18,
+                        spacing: 29,
+                        rows: 19,
+                        columns: 9,
+                        svgBackgroundColor: "white",
+                        DOT_RADIUS: 5,
+                        DOT_FILL_COLOR: "random",
+                        DISTANCE_TO_FEAR: 100,
                         DISTANCE_TO_STEP: 10,
-                        DELAY_BEFORE_GOING_HOME: 500,
-                        DOT_RADIUS: 2,
-                        CSS_CLASS_GOING_HOME: 'animate_going_home',
-                    },
-                    transitions: {
+                        DELAY_BEFORE_GOING_HOME: 200,
+                        CSS_CLASS_GOING_HOME: "animate_going_home",
                         timing: {
-                            fromHome: '0.1s',
-                            backHome: '1s',
+                            fromHome: "ease",
+                            backHome: "ease"
                         },
                         duration: {
-                            fromHome: 'ease',
-                            backHome: 'ease',
-                        },
+                            fromHome: "0.1s",
+                            backHome: "1s"
+                        }
+                    }
+                )
+            }
+
+            window.moderate_dots_spacing = {
+                padding: 50,
+                spacing: 50,
+                rows: 10,
+                columns: 30,
+                svgBackgroundColor: 'white',
+                DISTANCE_TO_FEAR: 100,
+                DISTANCE_TO_STEP: 30,
+                DELAY_BEFORE_GOING_HOME: 200,
+                DOT_RADIUS: 5,
+                DOT_FILL_COLOR: 'random',
+                CSS_CLASS_GOING_HOME: 'animate_going_home',
+                transitions: {
+                    timing: {
+                        fromHome: 'ease',
+                        backHome: 'ease',
+                    },
+                    duration: {
+                        fromHome: '0.1s',
+                        backHome: '1s',
+                    },
+                },
+            };
+            window.tenK_smalls_dots = {
+                padding: 10,
+                spacing: 10,
+                rows: 100,
+                columns: 100,
+                svgBackgroundColor: 'white',
+                DISTANCE_TO_FEAR: 100,
+                DISTANCE_TO_STEP: 30,
+                DELAY_BEFORE_GOING_HOME: 200,
+                DOT_RADIUS: 2,
+                DOT_FILL_COLOR: 'random',
+                CSS_CLASS_GOING_HOME: 'animate_going_home',
+                transitions: {
+                    timing: {
+                        fromHome: 'ease',
+                        backHome: 'ease',
+                    },
+                    duration: {
+                        fromHome: '0.1s',
+                        backHome: '1s',
+                    },
+                },
+            };
+            window.spaced_large_dots = {
+                padding: 50,
+                spacing: 120,
+                rows: 5,
+                columns: 5,
+                svgBackgroundColor: 'white',
+                DISTANCE_TO_FEAR: 100,
+                DISTANCE_TO_STEP: 30,
+                DELAY_BEFORE_GOING_HOME: 200,
+                DOT_RADIUS: 50,
+                DOT_FILL_COLOR: 'random',
+                CSS_CLASS_GOING_HOME: 'animate_going_home',
+                transitions: {
+                    timing: {
+                        fromHome: 'ease',
+                        backHome: 'ease',
+                    },
+                    duration: {
+                        fromHome: '0.1s',
+                        backHome: '1s',
+                    },
+                },
+            };
+            window.spaced_medium_dots = {
+                padding: 50,
+                spacing: 50,
+                rows: 10,
+                columns: 30,
+                svgBackgroundColor: 'white',
+                DISTANCE_TO_FEAR: 50,
+                DISTANCE_TO_STEP: 30,
+                DELAY_BEFORE_GOING_HOME: 200,
+                DOT_RADIUS: 20,
+                DOT_FILL_COLOR: 'random',
+                CSS_CLASS_GOING_HOME: 'animate_going_home',
+                transitions: {
+                    timing: {
+                        fromHome: 'ease',
+                        backHome: 'ease',
+                    },
+                    duration: {
+                        fromHome: '0.1s',
+                        backHome: '1s',
+                    },
+                },
+            }
+            window.dense_group = {
+                padding: 50,
+                spacing: 20,
+                rows: 20,
+                columns: 20,
+                svgBackgroundColor: 'white',
+                DISTANCE_TO_FEAR: 25,
+                DISTANCE_TO_STEP: 10,
+                DELAY_BEFORE_GOING_HOME: 200,
+                DOT_RADIUS: 20,
+                DOT_FILL_COLOR: 'random',
+                CSS_CLASS_GOING_HOME: 'animate_going_home',
+                transitions: {
+                    timing: {
+                        fromHome: 'ease',
+                        backHome: 'ease',
+                    },
+                    duration: {
+                        fromHome: '0.1s',
+                        backHome: '1s',
+                    },
+                },
+            };
+            let timeout;
+            const count = document.querySelector('.count');
+            count.innerHTML = 30 * 10;
+            const config = document.querySelector('.config');
+            config.innerHTML = JSON.stringify({
+                padding: 50,
+                spacing: 50,
+                rows: 10,
+                columns: 30,
+                svgBackgroundColor: 'white',
+                DISTANCE_TO_FEAR: 100,
+                DISTANCE_TO_STEP: 10,
+                DELAY_BEFORE_GOING_HOME: 200,
+                DOT_RADIUS: 5,
+                DOT_FILL_COLOR: 'random',
+                CSS_CLASS_GOING_HOME: 'animate_going_home',
+                timing: {
+                    fromHome: 'ease',
+                    backHome: 'ease',
+                },
+                duration: {
+                    fromHome: '0.1s',
+                    backHome: '1s',
+                },
+            }, undefined, 2)
+            const matrix = new DotMatrix(
+                document.querySelector('.dot-matrix'),
+                {
+                    padding: 50,
+                    spacing: 50,
+                    rows: 10,
+                    columns: 30,
+                    svgBackgroundColor: 'white',
+                    DISTANCE_TO_FEAR: 100,
+                    DISTANCE_TO_STEP: 10,
+                    DELAY_BEFORE_GOING_HOME: 200,
+                    DOT_RADIUS: 5,
+                    DOT_FILL_COLOR: 'random',
+                    CSS_CLASS_GOING_HOME: 'animate_going_home',
+                    timing: {
+                        fromHome: 'ease',
+                        backHome: 'ease',
+                    },
+                    duration: {
+                        fromHome: '0.1s',
+                        backHome: '1s',
                     },
                 }
             );
+
+            Array.from(document.querySelectorAll('input')).forEach(input => {
+                if (input.type === 'range') {
+                    input.addEventListener('change', () => {
+                        document.dispatchEvent(new CustomEvent('matrix_reload'));
+                    });
+                    return false;
+                }
+
+                input.addEventListener('keyup', () => {
+                    if (timeout) clearTimeout(timeout);
+                    timeout = setTimeout(() => {
+                        document.dispatchEvent(new CustomEvent('matrix_reload'));
+                    }, 250)
+                });
+            });
+
+            Array.from(document.querySelectorAll('button')).forEach(button => {
+                button.addEventListener('click', () => {
+                    document.dispatchEvent(new CustomEvent('matrix_reload', {
+                        detail: {
+                            config: button.classList.value,
+                        }
+                    }));
+                });
+            });
+
+            document.addEventListener('matrix_reload', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log(e.detail);
+                delete matrix;
+                const spacing = parseInt(document.querySelector('input[name="spacing"]').value);
+                const padding = parseInt(document.querySelector('input[name="padding"]').value);
+                const columns = parseInt(document.querySelector('input[name="columns"]').value) || 1;
+                const rows = parseInt(document.querySelector('input[name="rows"]').value) || 1;
+                const fear = parseInt(document.querySelector('input[name="fear-distance"]').value);
+                const delay = parseInt(document.querySelector('input[name="delay"]').value);
+                const step = parseInt(document.querySelector('input[name="step-distance"]').value);
+
+                const backgroundColor = document.querySelector('input[name="backgroundColor"]').value || 'white';
+                const dotRadius = parseInt(document.querySelector('input[name="dotRadius"]').value);
+                const dotFillColor = document.querySelector('input[name="dotFillColor"]').value || 'random';
+
+                const wrapper = document.querySelector('.wrapper');
+                const svg = document.querySelector('.dot-matrix');
+                const config = document.querySelector('.config');
+                count.innerHTML = rows * columns;
+                config.innerHTML = JSON.stringify({
+                    padding,
+                    spacing,
+                    rows,
+                    columns,
+                    svgBackgroundColor: backgroundColor,
+                    DOT_RADIUS: dotRadius,
+                    DOT_FILL_COLOR: dotFillColor,
+                    DISTANCE_TO_FEAR: fear,
+                    DISTANCE_TO_STEP: step,
+                    DELAY_BEFORE_GOING_HOME: !!delay === false ? false : delay,
+                    CSS_CLASS_GOING_HOME: 'animate_going_home',
+                    timing: {
+                        fromHome: 'ease',
+                        backHome: 'ease',
+                    },
+                    duration: {
+                        fromHome: '0.1s',
+                        backHome: '1s',
+                    },
+                }, undefined, 2);
+                svg.remove();
+                const newSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                newSvg.classList = 'dot-matrix';
+                wrapper.appendChild(newSvg);
+
+                if (e.detail) {
+                    console.log(window[e.detail.config]);
+                    new DotMatrix(newSvg, window[e.detail.config]);
+                    return false;
+                }
+
+                new DotMatrix(
+                    newSvg,
+                    {
+                        padding,
+                        spacing,
+                        rows,
+                        columns,
+                        svgBackgroundColor: backgroundColor,
+                        DOT_RADIUS: dotRadius,
+                        DOT_FILL_COLOR: dotFillColor,
+                        DISTANCE_TO_FEAR: fear,
+                        DISTANCE_TO_STEP: step,
+                        DELAY_BEFORE_GOING_HOME: !!delay === false ? false : delay,
+                        CSS_CLASS_GOING_HOME: 'animate_going_home',
+                        timing: {
+                            fromHome: 'ease',
+                            backHome: 'ease',
+                        },
+                        duration: {
+                            fromHome: '0.1s',
+                            backHome: '1s',
+                        },
+                    }
+                )
+            });
         </script>
     </body>
 </html>

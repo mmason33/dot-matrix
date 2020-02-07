@@ -5,8 +5,11 @@ class SmartDot {
         this.DISTANCE_TO_STEP = args.DISTANCE_TO_STEP;
         this.DELAY_BEFORE_GOING_HOME = args.DELAY_BEFORE_GOING_HOME;
         this.DOT_RADIUS = args.DOT_RADIUS;
+        this.DOT_FILL_COLOR = args.DOT_FILL_COLOR
         this.CSS_CLASS_GOING_HOME = args.CSS_CLASS_GOING_HOME;
         this.UNIQUE_IDENTIFIER = args.UNIQUE_IDENTIFIER;
+        this.IS_DESKTOP = args.IS_DESKTOP;
+        this.EVENT_TYPE = this.IS_DESKTOP ? 'mousemove' : 'touchmove';
 
         // Beginning home coordinates => Object passed by reference so the property values need to referenced and retrieved
         this.coordinates = {
@@ -30,26 +33,21 @@ class SmartDot {
         circle.setAttribute('cx', this.coordinates.home.x);
         circle.setAttribute('cy', this.coordinates.home.y);
         circle.setAttribute('r', this.DOT_RADIUS);
-        circle.setAttribute('fill', 'black');
+        circle.setAttribute('fill', this.DOT_FILL_COLOR);
         circle.setAttribute('transform', 'translate(0, 0)');
         this.dot = circle;
         this.svg.appendChild(this.dot);
     }
 
-    addEventListeners() {
-        this.svg.addEventListener('mousemove', this.delegate_mousemove.bind(this), false);
-    }
+    respondToInput(coordinate) {
+        // Static method
+        const vector_from_mouse_to_me = (new CoordinateTranslator).setCenterCoordinate(coordinate).getVectorToPoint(this.coordinates.current);
 
-    delegate_mousemove(event) {
-        event.stopPropagation();
-        event.preventDefault();
-        const mouse_coord = { x: event.x, y: event.y };
-        const vector_from_mouse_to_me = (new CoordinateTranslator).setCenterCoordinate(mouse_coord).getVectorToPoint(this.coordinates.current);
         if (!this.isMouseNearMe(vector_from_mouse_to_me)) {
             this.goHome();
             return false;
         }
-        //  console.log('Mouse is near');   //  Debugging Only
+
         this.dot.classList.remove(this.CSS_CLASS_GOING_HOME);
         //  Get Where I Should Go - Absolute Position
         const move_to_coords_absolute = (new CoordinateTranslator)
@@ -63,6 +61,34 @@ class SmartDot {
             ;
         //  Make the change happen on the DOM
         this.setWhereIShouldBe(move_to_coords_relative, move_to_coords_absolute);
+    }
+
+    addEventListeners(){
+        const methodName = `delegate_${this.EVENT_TYPE}`;
+        this.svg.addEventListener(this.EVENT_TYPE ,this[methodName].bind(this),false);
+    }
+
+    delegate_touchmove(event){
+        // Save our poor CPU
+        event.stopPropagation();
+        event.preventDefault();
+        // console.log(event);	//	Debugging Only
+        const touch	=	event.touches[0];
+        this.respondToInput({
+            x: touch.clientX,
+            y: touch.clientY
+        });
+    }
+
+    delegate_mousemove(event){
+        // Save our poor CPU
+        event.stopPropagation();
+        event.preventDefault();
+        // console.log(event);	//	Debugging Only
+        this.respondToInput({
+            x: event.layerX,
+            y: event.layerY
+        });
     }
 
     isMouseNearMe(vector_from_mouse_to_me) {
@@ -81,6 +107,12 @@ class SmartDot {
     }
 
     goHome() {
+        if (this.DELAY_BEFORE_GOING_HOME === false) {
+            this.dot.classList.add(this.CSS_CLASS_GOING_HOME);
+            this.setWhereIShouldBe({ dx: 0, dy: 0 }, this.coordinates.home);
+            return false;
+        }
+
         if (this[`timeout_return_home_${this.UNIQUE_IDENTIFIER}`]) clearTimeout(this[`timeout_return_home_${this.UNIQUE_IDENTIFIER}`]);
         this[`timeout_return_home_${this.UNIQUE_IDENTIFIER}`] = setTimeout((() => {
             this.dot.classList.add(this.CSS_CLASS_GOING_HOME);
