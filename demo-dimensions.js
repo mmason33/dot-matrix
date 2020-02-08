@@ -1,6 +1,6 @@
-(() => {
+function demoDimensions() {
     const controls = document.querySelector('.controls');
+    console.log(controls.clientWidth);
     const adjustedWidth = window.innerWidth - controls.clientWidth;
-    window.adjustedWidth = adjustedWidth - 76;
-    console.log(adjustedWidth);
-})();
+    return adjustedWidth;
+}

@@ -71,7 +71,6 @@
             <br>
             <p>Config Object(In JSON)</p>
             <pre class="config"></pre>
-
         </div>
         <div class="wrapper">
             <h1>Dot Matrix</h1>
@@ -82,107 +81,56 @@
         <script src="dot-matrix.js"></script>
         <script src="examples.js"></script>
         <script src="demo-dimensions.js"></script>
+        <script src="controls-listeners.js"></script>
+        <script src="mobile-demo.js"></script>
+        <script src="clean-class-object.js"></script>
         <script>
             (() => {
+                //--------------------------------------------------------
+                //--------------------------------------------------------
+                // Vars
+                const controls = document.querySelector('.controls');
+                const wrapper = document.querySelector('.wrapper');
+                const svg = document.querySelector('.dot-matrix');
+                const count = document.querySelector('.count');
+                const config = document.querySelector('.config');
+                let timeout;
+
+                //--------------------------------------------------------
+                //--------------------------------------------------------
+                // Mobile Settings
                 if (window.innerWidth <= 991) {
-                    const controls = document.querySelector('.controls');
-                    controls.remove();
-                    const wrapper = document.querySelector('.wrapper');
-                    wrapper.style.margin = 0;
-                    const svg = document.querySelector('.dot-matrix');
-                    svg.style.border = 'none';
-                    new DotMatrix(
+                    mobileDemo({
                         svg,
-                        {
-                            padding: 18,
-                            spacing: 15,
-                            // rows: 19,
-                            // columns: 9,
-                            height: window.innerHeight - 27,
-                            width: window.innerWidth,
-                            svgBackgroundColor: "white",
-                            DOT_RADIUS: 5,
-                            DOT_FILL_COLOR: "diagonal",
-                            DISTANCE_TO_FEAR: 50,
-                            DISTANCE_TO_STEP: 25,
-                            DELAY_BEFORE_GOING_HOME: 500,
-                            CSS_CLASS_GOING_HOME: "animate_going_home",
-                            timing: {
-                                fromHome: "ease",
-                                backHome: "ease"
-                            },
-                            duration: {
-                                fromHome: "0.1s",
-                                backHome: "1s"
-                            }
-                        }
-                    );
+                        controls,
+                        wrapper
+                    });
 
                     return false;
                 }
 
-                let timeout;
-                const count = document.querySelector('.count');
-                count.innerHTML = 30 * 10;
-                const config = document.querySelector('.config');
+                //--------------------------------------------------------
+                //--------------------------------------------------------
+                // Update size for fullscreen considering the controls
+                const adjustedWidth = demoDimensions();
 
-                config.innerHTML = JSON.stringify({
-                    padding: 50,
-                    spacing: 50,
-                    width: window.adjustedWidth,
-                    height: window.innerHeight,
-                    rows: 10,
-                    columns: 30,
-                    svgBackgroundColor: 'white',
-                    DISTANCE_TO_FEAR: 100,
-                    DISTANCE_TO_STEP: 10,
-                    DELAY_BEFORE_GOING_HOME: 200,
-                    DOT_RADIUS: 5,
-                    DOT_COLOR_PATTERN: 'random',
-                    PATTERN_COLORS: [
-                        'red',
-                        'orange',
-                        'yellow',
-                        'green',
-                        'cyan',
-                        'skyblue',
-                        'blue',
-                        'indigo',
-                        'violet',
-                        'lightgrey',
-                    ],
-                    CSS_CLASS_GOING_HOME: 'animate_going_home',
-                    timing: {
-                        fromHome: 'ease',
-                        backHome: 'ease',
-                    },
-                    duration: {
-                        fromHome: '0.1s',
-                        backHome: '1s',
-                    },
-                }, undefined, 2);
-
-                const wrapper = document.querySelector('.wrapper');
-                wrapper.style.width = `${window.adjustedWidth}px`;
-                wrapper.style.height = `${window.innerHeight}px`;
-
-                const matrix = new DotMatrix(
+                //--------------------------------------------------------
+                //--------------------------------------------------------
+                // Kick it off
+                window.matrix = new DotMatrix(
                     document.querySelector('.dot-matrix'),
                     {
                         padding: 50,
-                        spacing: 60,
-                        // rows: 10,
-                        // columns: 20,
-                        width: window.adjustedWidth,
+                        spacing: 20,
+                        width: adjustedWidth,
                         height: window.innerHeight,
                         svgBackgroundColor: 'white',
-                        DISTANCE_TO_FEAR: 100,
-                        DISTANCE_TO_STEP: 10,
-                        DELAY_BEFORE_GOING_HOME: 200,
-                        DOT_RADIUS: 5,
-
-                        DOT_COLOR_PATTERN: 'diagonal',
-                        PATTERN_COLORS: [
+                        distanceToFear: 100,
+                        distanceToStep: 10,
+                        delayBeforeGoingHome: 200,
+                        dotRadius: 5,
+                        dotColorPattern: 'diagonal',
+                        patternColors: [
                             'red',
                             'orange',
                             'yellow',
@@ -194,7 +142,7 @@
                             'violet',
                             'lightgray',
                         ],
-                        CSS_CLASS_GOING_HOME: 'animate_going_home',
+                        cssClassGoingHome: 'animate_going_home',
                         timing: {
                             fromHome: 'ease',
                             backHome: 'ease',
@@ -206,37 +154,37 @@
                     }
                 );
 
-                Array.from(document.querySelectorAll('input')).forEach(input => {
-                    if (input.type === 'range') {
-                        input.addEventListener('change', () => {
-                            document.dispatchEvent(new Event('matrix_reload'));
-                        });
-                        return false;
-                    }
+                //--------------------------------------------------------
+                //--------------------------------------------------------
+                // Clean class object
+                const cleanObject = cleanObjectClass(window.matrix);
 
-                    input.addEventListener('keyup', () => {
-                        if (timeout) clearTimeout(timeout);
-                        timeout = setTimeout(() => {
-                            document.dispatchEvent(new Event('matrix_reload'));
-                        }, 250)
-                    });
-                });
+                //--------------------------------------------------------
+                //--------------------------------------------------------
+                // Print initial return object from DotMatrix
+                config.innerHTML = JSON.stringify(cleanObject, undefined, 2);
+                count.innerHTML = parseInt(cleanObject.rows) * parseInt(cleanObject.columns);
 
-                Array.from(document.querySelectorAll('button')).forEach(button => {
-                    button.addEventListener('click', () => {
-                        document.dispatchEvent(new CustomEvent('matrix_reload', {
-                            detail: {
-                                config: button.classList.value,
-                            }
-                        }));
-                    });
-                });
+                //--------------------------------------------------------
+                //--------------------------------------------------------
+                // Adjust wrapper width
+                wrapper.style.width = `${adjustedWidth}px`;
+                wrapper.style.height = `${window.innerHeight}px`;
 
+                //--------------------------------------------------------
+                //--------------------------------------------------------
+                // Set Controls Listeners
+                controlsListeners();
+
+                //--------------------------------------------------------
+                //--------------------------------------------------------
+                // Custom Event Listener
                 document.addEventListener('matrix_reload', (e) => {
+                    // Performance
                     e.preventDefault();
                     e.stopPropagation();
 
-                    delete matrix;
+                    // Vars from controls
                     const height = parseInt(document.querySelector('input[name="height"]').value);
                     const width = parseInt(document.querySelector('input[name="width"]').value);
                     const spacing = parseInt(document.querySelector('input[name="spacing"]').value);
@@ -246,33 +194,39 @@
                     const fear = parseInt(document.querySelector('input[name="fear-distance"]').value);
                     const delay = parseInt(document.querySelector('input[name="delay"]').value);
                     const step = parseInt(document.querySelector('input[name="step-distance"]').value);
-
                     const backgroundColor = document.querySelector('input[name="backgroundColor"]').value || 'white';
                     const dotRadius = parseInt(document.querySelector('input[name="dotRadius"]').value);
                     const dotFillColor = document.querySelector('input[name="dotFillColor"]').value || 'random';
 
-                    const wrapper = document.querySelector('.wrapper');
-                    wrapper.style.width = `${window.adjustedWidth}px`;
+                    wrapper.style.width = `${adjustedWidth}px`;
                     wrapper.style.height = `${window.innerHeight}px`;
 
+                    // Old svg
                     const svg = document.querySelector('.dot-matrix');
-                    const config = document.querySelector('.config');
-                    count.innerHTML = rows * columns;
+                    // Remove old svg
+                    svg.remove();
 
+                    // Create new svg, add class and append to wrapper
+                    const newSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                    newSvg.classList = 'dot-matrix';
+                    wrapper.appendChild(newSvg);
+
+                    // Delete old class
+                    delete window.matrix
+
+                    // New Config object
                     const configObject = {
-                        width: window.adjustedWidth,
+                        width: adjustedWidth,
                         height: window.innerHeight,
                         padding,
                         spacing,
-                        // rows,
-                        // columns,
                         svgBackgroundColor: backgroundColor,
-                        DOT_RADIUS: dotRadius,
-                        DOT_FILL_COLOR: dotFillColor,
-                        DISTANCE_TO_FEAR: fear,
-                        DISTANCE_TO_STEP: step,
-                        DELAY_BEFORE_GOING_HOME: !!delay === false ? false : delay,
-                        CSS_CLASS_GOING_HOME: 'animate_going_home',
+                        dotRadius: dotRadius,
+                        dotFillColor: dotFillColor,
+                        distanceToFear: fear,
+                        distanceToStep: step,
+                        delayBeforeGoingHome: !!delay === false ? false : delay,
+                        cssClassGoingHome: 'animate_going_home',
                         timing: {
                             fromHome: 'ease',
                             backHome: 'ease',
@@ -283,21 +237,15 @@
                         },
                     };
 
-                    config.innerHTML = JSON.stringify(configObject, undefined, 2);
-                    svg.remove();
-                    const newSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                    newSvg.classList = 'dot-matrix';
-                    wrapper.appendChild(newSvg);
-
-                    if (e.detail) {
-                        new DotMatrix(newSvg, window[e.detail.config]);
-                        return false;
-                    }
-
-                    new DotMatrix(
+                    // Kick it off
+                    window.matrix = new DotMatrix(
                         newSvg,
-                        configObject
-                    )
+                        e.detail ? window[e.detail.config] : configObject,
+                    );
+
+                    // Print config json and update dot count
+                    config.innerHTML = JSON.stringify(cleanObject, undefined, 2);
+                    count.innerHTML = parseInt(cleanObject.rows) * parseInt(cleanObject.columns);
                 });
             })();
         </script>

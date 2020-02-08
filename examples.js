@@ -4,12 +4,12 @@ window.moderate_dots_spacing = {
     rows: 10,
     columns: 30,
     svgBackgroundColor: 'white',
-    DISTANCE_TO_FEAR: 100,
-    DISTANCE_TO_STEP: 30,
-    DELAY_BEFORE_GOING_HOME: 200,
-    DOT_RADIUS: 5,
-    DOT_COLOR_PATTERN: 'vertical',
-    PATTERN_COLORS: [
+    distanceToFear: 100,
+    distanceToStep: 30,
+    delayBeforeGoingHome: 200,
+    dotRadius: 5,
+    dotColorPattern: 'vertical',
+    patternColors: [
         'red',
         'orange',
         'yellow',
@@ -21,7 +21,7 @@ window.moderate_dots_spacing = {
         'violet',
         'lightgrey',
     ],
-    CSS_CLASS_GOING_HOME: 'animate_going_home',
+    cssClassGoingHome: 'animate_going_home',
     transitions: {
         timing: {
             fromHome: 'ease',
@@ -40,12 +40,12 @@ window.tenK_smalls_dots = {
     rows: 100,
     columns: 100,
     svgBackgroundColor: 'white',
-    DISTANCE_TO_FEAR: 100,
-    DISTANCE_TO_STEP: 30,
-    DELAY_BEFORE_GOING_HOME: 200,
-    DOT_RADIUS: 2,
-    DOT_COLOR_PATTERN: 'random',
-    PATTERN_COLORS: [
+    distanceToFear: 100,
+    distanceToStep: 30,
+    delayBeforeGoingHome: 200,
+    dotRadius: 2,
+    dotColorPattern: 'random',
+    patternColors: [
         'red',
         'orange',
         'yellow',
@@ -57,7 +57,7 @@ window.tenK_smalls_dots = {
         'violet',
         'lightgrey',
     ],
-    CSS_CLASS_GOING_HOME: 'animate_going_home',
+    cssClassGoingHome: 'animate_going_home',
     transitions: {
         timing: {
             fromHome: 'ease',
@@ -76,12 +76,12 @@ window.spaced_large_dots = {
     rows: 5,
     columns: 5,
     svgBackgroundColor: 'white',
-    DISTANCE_TO_FEAR: 100,
-    DISTANCE_TO_STEP: 30,
-    DELAY_BEFORE_GOING_HOME: 200,
-    DOT_RADIUS: 50,
-    DOT_COLOR_PATTERN: 'random',
-    PATTERN_COLORS: [
+    distanceToFear: 100,
+    distanceToStep: 30,
+    delayBeforeGoingHome: 200,
+    dotRadius: 50,
+    dotColorPattern: 'random',
+    patternColors: [
         'red',
         'orange',
         'yellow',
@@ -93,7 +93,7 @@ window.spaced_large_dots = {
         'violet',
         'lightgrey',
     ],
-    CSS_CLASS_GOING_HOME: 'animate_going_home',
+    cssClassGoingHome: 'animate_going_home',
     transitions: {
         timing: {
             fromHome: 'ease',
@@ -112,12 +112,12 @@ window.spaced_medium_dots = {
     rows: 10,
     columns: 30,
     svgBackgroundColor: 'white',
-    DISTANCE_TO_FEAR: 50,
-    DISTANCE_TO_STEP: 30,
-    DELAY_BEFORE_GOING_HOME: 200,
-    DOT_RADIUS: 20,
-    DOT_COLOR_PATTERN: 'diagonal',
-    PATTERN_COLORS: [
+    distanceToFear: 50,
+    distanceToStep: 30,
+    delayBeforeGoingHome: 200,
+    dotRadius: 20,
+    dotColorPattern: 'diagonal',
+    patternColors: [
         'red',
         'orange',
         'yellow',
@@ -129,7 +129,7 @@ window.spaced_medium_dots = {
         'violet',
         'lightgrey',
     ],
-    CSS_CLASS_GOING_HOME: 'animate_going_home',
+    cssClassGoingHome: 'animate_going_home',
     transitions: {
         timing: {
             fromHome: 'ease',
@@ -148,12 +148,12 @@ window.dense_group = {
     rows: 20,
     columns: 20,
     svgBackgroundColor: 'white',
-    DISTANCE_TO_FEAR: 25,
-    DISTANCE_TO_STEP: 10,
-    DELAY_BEFORE_GOING_HOME: 200,
-    DOT_RADIUS: 20,
-    DOT_COLOR_PATTERN: 'diagonal',
-    PATTERN_COLORS: [
+    distanceToFear: 25,
+    distanceToStep: 10,
+    delayBeforeGoingHome: 200,
+    dotRadius: 20,
+    dotColorPattern: 'diagonal',
+    patternColors: [
         'red',
         'orange',
         'yellow',
@@ -165,7 +165,7 @@ window.dense_group = {
         'violet',
         'lightgrey',
     ],
-    CSS_CLASS_GOING_HOME: 'animate_going_home',
+    cssClassGoingHome: 'animate_going_home',
     transitions: {
         timing: {
             fromHome: 'ease',

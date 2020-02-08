@@ -6,12 +6,12 @@
  * @param {Number} colPaddingAdjust - The padding adjustment used to calculate columns with given a specific width
  * @param {Number} rowPaddingAdjust - The padding adjustment used to calculate row with given a specific height
  * @param {String} svgBackgroundColor - The background color of the whole svg
- * @param {Number} DISTANCE_TO_FEAR - The threshold of when the dot will fear and run away from the mouse
- * @param {Number} DISTANCE_TO_STEP - The size of the initial step away from the mouse once in the fear zone
- * @param {Number} DELAY_BEFORE_GOING_HOME - The animation delay before returning back home -> in milleseconds
- * @param {Number} DOT_RADIUS - Radius of the dots
- * @param {String} DOT_FILL_COLOR - The fill color of the dot -> default is random
- * @param {String} CSS_CLASS_GOING_HOME - The class to animate the dot going home -> also used in the style tag injection
+ * @param {Number} distanceToFear - The threshold of when the dot will fear and run away from the mouse
+ * @param {Number} distanceToStep - The size of the initial step away from the mouse once in the fear zone
+ * @param {Number} delayBeforeGoingHome - The animation delay before returning back home -> in milleseconds
+ * @param {Number} dotRadius - Radius of the dots
+ * @param {String} dotFillColor - The fill color of the dot -> default is random
+ * @param {String} cssClassGoingHome - The class to animate the dot going home -> also used in the style tag injection
  * @property {Object} duration - Object to contain fromHome and backHome animation duration properties
  * @property {String} fromHome - The animation duration fromHome or away from the mouse
  * @property {String} backHome - The animation duration backHome or when the dots returns to it's original position
@@ -31,20 +31,20 @@ class DotMatrix {
         this.colPaddingAdjust = 0;
         this.rowPaddingAdjust = 0;
         this.svgBackgroundColor = args.svgBackgroundColor || 'lightgrey';
-        this.DISTANCE_TO_FEAR = args.DISTANCE_TO_FEAR || 50;
-        this.DISTANCE_TO_STEP = args.DISTANCE_TO_STEP || 10;
-        this.DELAY_BEFORE_GOING_HOME = args.DELAY_BEFORE_GOING_HOME == false ? false : args.DELAY_BEFORE_GOING_HOME || 500;
-        this.DOT_RADIUS = args.DOT_RADIUS || 2;
-        this.DOT_FILL_COLOR = args.DOT_FILL_COLOR || 'random';
-        this.CSS_CLASS_GOING_HOME = args.CSS_CLASS_GOING_HOME || 'animate_going_home';
+        this.distanceToFear = args.distanceToFear || 50;
+        this.distanceToStep = args.distanceToStep || 10;
+        this.delayBeforeGoingHome = args.delayBeforeGoingHome == false ? false : args.delayBeforeGoingHome || 500;
+        this.dotRadius = args.dotRadius || 2;
+        this.dotFillColor = args.dotFillColor || 'black';
+        this.cssClassGoingHome = args.cssClassGoingHome || 'animate_going_home';
         this.timing = args.timing || {};
         this.duration = args.duration || {};
         this.duration.fromHome = Object(args.duration).hasOwnProperty('fromHome') ? args.duration.fromHome : '0.1s';
         this.duration.backHome = Object(args.duration).hasOwnProperty('backHome') ? args.duration.backHome : '1s';
         this.timing.fromHome = Object(args.timing).hasOwnProperty('fromHome') ? args.timing.fromHome : 'ease';
         this.timing.backHome = Object(args.timing).hasOwnProperty('backHome') ? args.timing.backHome : 'ease';
-        this.DOT_COLOR_PATTERN = args.DOT_COLOR_PATTERN || 'random';
-        this.PATTERN_COLORS = args.PATTERN_COLORS || [
+        this.dotColorPattern = args.dotColorPattern || 'random';
+        this.patternColors = args.patternColors || [
             'red',
             'orange',
             'yellow',
@@ -63,23 +63,30 @@ class DotMatrix {
         // Specified dimensions
         this.width = args.width;
         this.height = args.height;
+
         // If width and height are set in the config calculate the cols and rows
         if (this.width && this.height) this.calculated = this.calculateColumnsAndRows();
+
         // Ternaries checking for the property "calculated" meaning the width and height were explicitly set
         this.rows = this.calculated ?
             this.calculated.rows :
             args.rows || 40;
+
         this.columns = this.calculated ?
             this.calculated.columns :
             args.columns || 40;
-        console.log(this);
+
         // If width and height are explicitly set we'll set the dimensions to those else we'll calculate the dimensions of the specified cols and rows
         this.calculated ?
             this.setDimensions(this.width, this.height)
             : this.calculateDimensions();
         this.injectCss();
         this.createMatrix();
-        this.handleMouseLeave();
+
+        // REVIST FUNCTION
+        // this.handleMouseLeave();
+
+        return this;
     }
 
     calculateColumnsAndRows() {
@@ -148,13 +155,13 @@ class DotMatrix {
                     {
                         HOME_COORDINATE: coordinate,
                         UNIQUE_IDENTIFIER: i,
-                        DISTANCE_TO_FEAR: this.DISTANCE_TO_FEAR,
-                        DISTANCE_TO_STEP: this.DISTANCE_TO_STEP,
-                        DELAY_BEFORE_GOING_HOME: this.DELAY_BEFORE_GOING_HOME,
-                        DOT_RADIUS: this.DOT_RADIUS,
-                        // DOT_FILL_COLOR: this.DOT_FILL_COLOR === 'random' ? '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6) : this.DOT_FILL_COLOR,
-                        DOT_FILL_COLOR: this.getColor(i, j),
-                        CSS_CLASS_GOING_HOME: this.CSS_CLASS_GOING_HOME,
+                        distanceToFear: this.distanceToFear,
+                        distanceToStep: this.distanceToStep,
+                        delayBeforeGoingHome: this.delayBeforeGoingHome,
+                        dotRadius: this.dotRadius,
+                        // dotFillColor: this.dotFillColor === 'random' ? '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6) : this.dotFillColor,
+                        dotFillColor: this.getColor(i, j),
+                        cssClassGoingHome: this.cssClassGoingHome,
                         IS_DESKTOP: this.IS_DESKTOP,
                     }
                 );
@@ -166,39 +173,39 @@ class DotMatrix {
         let color;
         let startIndex;
         let offsetIndex;
-        switch(this.DOT_COLOR_PATTERN) {
+        switch(this.dotColorPattern) {
             case 'random':
                 color = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
                 break;
             case 'diagonal':
                 // Diagonal Rainbow
-                startIndex = (column % this.PATTERN_COLORS.length) - (row % this.PATTERN_COLORS.length);
+                startIndex = (column % this.patternColors.length) - (row % this.patternColors.length);
                 offsetIndex = startIndex + 1;
                 // Pass undefined to wrap array and combat weird slice behavior when startIndex is -1
-                color = this.PATTERN_COLORS.slice(startIndex, startIndex == -1 ? undefined : offsetIndex);
+                color = this.patternColors.slice(startIndex, startIndex == -1 ? undefined : offsetIndex);
                 break;
             case 'vertical':
                 console.log('hit')
                 // Vertical Rainbow
-                startIndex = row % this.PATTERN_COLORS.length;
+                startIndex = row % this.patternColors.length;
                 offsetIndex =  -1;
 
-                if ( startIndex < this.PATTERN_COLORS.length ) {
+                if ( startIndex < this.patternColors.length ) {
                     offsetIndex =  startIndex + 1;
                 }
 
-                color = this.PATTERN_COLORS.slice(startIndex,offsetIndex);
+                color = this.patternColors.slice(startIndex,offsetIndex);
                 break;
             case 'horizontal':
                 // Horizontal Rainbow
-                startIndex = column % this.PATTERN_COLORS.length;
+                startIndex = column % this.patternColors.length;
                 offsetIndex =  -1;
 
-                if ( startIndex < this.PATTERN_COLORS.length ) {
+                if ( startIndex < this.patternColors.length ) {
                     offsetIndex =  startIndex + 1;
                 }
 
-                color = this.PATTERN_COLORS.slice(startIndex,offsetIndex);
+                color = this.patternColors.slice(startIndex,offsetIndex);
         }
 
         return color;
@@ -252,6 +259,7 @@ class DotMatrix {
         document.querySelector('head').appendChild(style);
     }
 
+    // TODO: REVISIT
     handleMouseLeave() {
         this.rootSvg.addEventListener('mouseleave', (e) => {
             setTimeout(() => {
