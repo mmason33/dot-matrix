@@ -6,51 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Dot Matrix🔥</title>
         <link href="https://fonts.googleapis.com/css?family=Cutive+Mono&display=swap" rel="stylesheet">
-        <style>
-            html,
-            body {
-                height: 100%;
-                margin: 0;
-                padding: 0;
-                font-family: 'Cutive Mono', monospace;
-            }
-
-            div {
-                position: relative;
-                text-align: center;
-                margin-top: 50px;
-            }
-
-            svg {
-                display: inline-block !important;
-                position: relative;
-                border: 1px solid lightgrey;
-            }
-
-            .controls {
-                position: absolute;
-                top: 0;
-                right: 0;
-                padding: 5px 15px;
-                z-index: 9999;
-                background-color: white;
-                text-align: left;
-            }
-
-            label {
-                display: block;
-                text-transform: uppercase;
-                padding: 10px 0;
-            }
-
-            input {
-                margin-left: 5px;
-            }
-
-            button {
-                display: block;
-            }
-        </style>
+        <link href="demo.css" rel="stylesheet">
     </head>
     <body>
         <div class="controls">
@@ -117,13 +73,15 @@
             <pre class="config"></pre>
 
         </div>
-        <h2 style="text-align: center;">Dot Matrix</h2>
         <div class="wrapper">
+            <h1>Dot Matrix</h1>
             <svg class="dot-matrix" width="100%" height="100%"></svg>
         </div>
         <script src="coordinate-translator.js"></script>
         <script src="smart-dot.js"></script>
         <script src="dot-matrix.js"></script>
+        <script src="examples.js"></script>
+        <script src="demo-dimensions.js"></script>
         <script>
             (() => {
                 if (window.innerWidth <= 991) {
@@ -163,186 +121,6 @@
                     return false;
                 }
 
-                window.moderate_dots_spacing = {
-                    padding: 50,
-                    spacing: 50,
-                    rows: 10,
-                    columns: 30,
-                    svgBackgroundColor: 'white',
-                    DISTANCE_TO_FEAR: 100,
-                    DISTANCE_TO_STEP: 30,
-                    DELAY_BEFORE_GOING_HOME: 200,
-                    DOT_RADIUS: 5,
-                    DOT_COLOR_PATTERN: 'vertical',
-                    PATTERN_COLORS: [
-                        'red',
-                        'orange',
-                        'yellow',
-                        'green',
-                        'cyan',
-                        'skyblue',
-                        'blue',
-                        'indigo',
-                        'violet',
-                        'lightgrey',
-                    ],
-                    CSS_CLASS_GOING_HOME: 'animate_going_home',
-                    transitions: {
-                        timing: {
-                            fromHome: 'ease',
-                            backHome: 'ease',
-                        },
-                        duration: {
-                            fromHome: '0.1s',
-                            backHome: '1s',
-                        },
-                    },
-                };
-
-                window.tenK_smalls_dots = {
-                    padding: 10,
-                    spacing: 10,
-                    rows: 100,
-                    columns: 100,
-                    svgBackgroundColor: 'white',
-                    DISTANCE_TO_FEAR: 100,
-                    DISTANCE_TO_STEP: 30,
-                    DELAY_BEFORE_GOING_HOME: 200,
-                    DOT_RADIUS: 2,
-                    DOT_COLOR_PATTERN: 'random',
-                    PATTERN_COLORS: [
-                        'red',
-                        'orange',
-                        'yellow',
-                        'green',
-                        'cyan',
-                        'skyblue',
-                        'blue',
-                        'indigo',
-                        'violet',
-                        'lightgrey',
-                    ],
-                    CSS_CLASS_GOING_HOME: 'animate_going_home',
-                    transitions: {
-                        timing: {
-                            fromHome: 'ease',
-                            backHome: 'ease',
-                        },
-                        duration: {
-                            fromHome: '0.1s',
-                            backHome: '1s',
-                        },
-                    },
-                };
-
-                window.spaced_large_dots = {
-                    padding: 50,
-                    spacing: 120,
-                    rows: 5,
-                    columns: 5,
-                    svgBackgroundColor: 'white',
-                    DISTANCE_TO_FEAR: 100,
-                    DISTANCE_TO_STEP: 30,
-                    DELAY_BEFORE_GOING_HOME: 200,
-                    DOT_RADIUS: 50,
-                    DOT_COLOR_PATTERN: 'random',
-                    PATTERN_COLORS: [
-                        'red',
-                        'orange',
-                        'yellow',
-                        'green',
-                        'cyan',
-                        'skyblue',
-                        'blue',
-                        'indigo',
-                        'violet',
-                        'lightgrey',
-                    ],
-                    CSS_CLASS_GOING_HOME: 'animate_going_home',
-                    transitions: {
-                        timing: {
-                            fromHome: 'ease',
-                            backHome: 'ease',
-                        },
-                        duration: {
-                            fromHome: '0.1s',
-                            backHome: '1s',
-                        },
-                    },
-                };
-
-                window.spaced_medium_dots = {
-                    padding: 50,
-                    spacing: 50,
-                    rows: 10,
-                    columns: 30,
-                    svgBackgroundColor: 'white',
-                    DISTANCE_TO_FEAR: 50,
-                    DISTANCE_TO_STEP: 30,
-                    DELAY_BEFORE_GOING_HOME: 200,
-                    DOT_RADIUS: 20,
-                    DOT_COLOR_PATTERN: 'diagonal',
-                    PATTERN_COLORS: [
-                        'red',
-                        'orange',
-                        'yellow',
-                        'green',
-                        'cyan',
-                        'skyblue',
-                        'blue',
-                        'indigo',
-                        'violet',
-                        'lightgrey',
-                    ],
-                    CSS_CLASS_GOING_HOME: 'animate_going_home',
-                    transitions: {
-                        timing: {
-                            fromHome: 'ease',
-                            backHome: 'ease',
-                        },
-                        duration: {
-                            fromHome: '0.1s',
-                            backHome: '1s',
-                        },
-                    },
-                }
-
-                window.dense_group = {
-                    padding: 50,
-                    spacing: 20,
-                    rows: 20,
-                    columns: 20,
-                    svgBackgroundColor: 'white',
-                    DISTANCE_TO_FEAR: 25,
-                    DISTANCE_TO_STEP: 10,
-                    DELAY_BEFORE_GOING_HOME: 200,
-                    DOT_RADIUS: 20,
-                    DOT_COLOR_PATTERN: 'diagonal',
-                    PATTERN_COLORS: [
-                        'red',
-                        'orange',
-                        'yellow',
-                        'green',
-                        'cyan',
-                        'skyblue',
-                        'blue',
-                        'indigo',
-                        'violet',
-                        'lightgrey',
-                    ],
-                    CSS_CLASS_GOING_HOME: 'animate_going_home',
-                    transitions: {
-                        timing: {
-                            fromHome: 'ease',
-                            backHome: 'ease',
-                        },
-                        duration: {
-                            fromHome: '0.1s',
-                            backHome: '1s',
-                        },
-                    },
-                };
-
                 let timeout;
                 const count = document.querySelector('.count');
                 count.innerHTML = 30 * 10;
@@ -351,6 +129,8 @@
                 config.innerHTML = JSON.stringify({
                     padding: 50,
                     spacing: 50,
+                    width: window.adjustedWidth,
+                    height: window.innerHeight,
                     rows: 10,
                     columns: 30,
                     svgBackgroundColor: 'white',
@@ -382,13 +162,19 @@
                     },
                 }, undefined, 2);
 
+                const wrapper = document.querySelector('.wrapper');
+                wrapper.style.width = `${window.adjustedWidth}px`;
+                wrapper.style.height = `${window.innerHeight}px`;
+
                 const matrix = new DotMatrix(
                     document.querySelector('.dot-matrix'),
                     {
                         padding: 50,
-                        spacing: 50,
-                        rows: 10,
-                        columns: 30,
+                        spacing: 60,
+                        // rows: 10,
+                        // columns: 20,
+                        width: window.adjustedWidth,
+                        height: window.innerHeight,
                         svgBackgroundColor: 'white',
                         DISTANCE_TO_FEAR: 100,
                         DISTANCE_TO_STEP: 10,
@@ -466,17 +252,20 @@
                     const dotFillColor = document.querySelector('input[name="dotFillColor"]').value || 'random';
 
                     const wrapper = document.querySelector('.wrapper');
+                    wrapper.style.width = `${window.adjustedWidth}px`;
+                    wrapper.style.height = `${window.innerHeight}px`;
+
                     const svg = document.querySelector('.dot-matrix');
                     const config = document.querySelector('.config');
                     count.innerHTML = rows * columns;
 
                     const configObject = {
-                        height,
-                        width,
+                        width: window.adjustedWidth,
+                        height: window.innerHeight,
                         padding,
                         spacing,
-                        rows,
-                        columns,
+                        // rows,
+                        // columns,
                         svgBackgroundColor: backgroundColor,
                         DOT_RADIUS: dotRadius,
                         DOT_FILL_COLOR: dotFillColor,

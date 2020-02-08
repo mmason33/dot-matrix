@@ -1,0 +1,81 @@
+@-webkit-keyframes demo {
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+}
+@-moz-keyframes demo {
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+}
+@-o-keyframes demo {
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+}
+@keyframes demo {
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Cutive Mono', monospace;
+}
+
+/* div {
+    position: relative;
+    text-align: center;
+    margin-top: 50px;
+} */
+.wrapper {
+    position: relative;
+}
+
+svg {
+    display: inline-block !important;
+    position: relative;
+    /* background: linear-gradient(top right, #131313, #000000, #131313, #000000) !important; */
+    background: linear-gradient(45deg, #070707 43%, #070707 43%, #070707 43%, #000000 45%, #000000 70%);
+    background-size: 1800% 1800%;
+    -webkit-animation: demo 10s ease infinite;
+    -moz-animation: demo 10s ease infinite;
+    animation: demo 10s ease infinite;
+}
+
+.controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px 15px;
+    z-index: 9999;
+    background-color: white;
+    text-align: left;
+}
+
+label {
+    display: block;
+    text-transform: uppercase;
+    padding: 10px 0;
+}
+
+input {
+    margin-left: 5px;
+}
+
+button {
+    display: block;
+}
+
+h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    z-index: 99999;
+}

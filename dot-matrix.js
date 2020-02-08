@@ -136,7 +136,6 @@ class DotMatrix {
     }
 
     createMatrix() {
-        // const arr = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'black', 'limegreen', 'CornFlowerBlue'];
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.columns; j++) {
                 let coordinate  =   {
@@ -167,7 +166,6 @@ class DotMatrix {
         let color;
         let startIndex;
         let offsetIndex;
-        console.log(this.DOT_COLOR_PATTERN)
         switch(this.DOT_COLOR_PATTERN) {
             case 'random':
                 color = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
@@ -210,35 +208,36 @@ class DotMatrix {
         const existingStyleTag = document.querySelector('.dot-matrix-style');
         const styleDeclaration = `
             svg {
-                background-color: ${this.svgBackgroundColor};
+                // background-color: ${this.svgBackgroundColor};
                 display: block;
             }
+
             circle {
-                -webkit-transition-timing-function: ease;
-                     -o-transition-timing-function: ease;
-                        transition-timing-function: ease;
+                -webkit-transition-timing-function: ${this.timing.fromHome || 'ease'};
+                     -o-transition-timing-function: ${this.timing.fromHome || 'ease'};
+                        transition-timing-function: ${this.timing.fromHome || 'ease'};
                 -webkit-transition-property: -webkit-transform;
                 transition-property: -webkit-transform;
                 -o-transition-property: transform;
                 transition-property: transform;
                 transition-property: transform, -webkit-transform;
-                -webkit-transition-duration: 0.1s;
-                     -o-transition-duration: 0.1s;
-                        transition-duration: 0.1s;
-                        transform-origin: 50% 50%;
+                -webkit-transition-duration: ${this.duration.fromHome || '0.1s'};
+                     -o-transition-duration: ${this.duration.fromHome || '0.1s'};
+                        transition-duration: ${this.duration.fromHome || '0.1s'};
             }
+
             circle.animate_going_home {
-                -webkit-transition-timing-function: ease;
-                     -o-transition-timing-function: ease;
-                        transition-timing-function: ease;
+                -webkit-transition-timing-function: ${this.timing.backHome || 'ease'};
+                     -o-transition-timing-function: ${this.timing.backHome || 'ease'};
+                        transition-timing-function: ${this.timing.backHome || 'ease'};
                 -webkit-transition-property: -webkit-transform;
                 transition-property: -webkit-transform;
                 -o-transition-property: transform;
                 transition-property: transform;
                 transition-property: transform, -webkit-transform;
-                -webkit-transition-duration: 1s;
-                     -o-transition-duration: 1s;
-                        transition-duration: 1s;
+                -webkit-transition-duration: ${this.duration.backHome || '1s'};
+                     -o-transition-duration: ${this.duration.backHome || '1s'};
+                        transition-duration: ${this.duration.backHome || '1s'};
             }
         `;
 
