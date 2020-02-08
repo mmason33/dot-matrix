@@ -16,8 +16,8 @@ function mobileDemo({
             svgBackgroundColor: "white",
             dotRadius: 7,
             dotFillColor: "diagonal",
-            distanceToFear: 50,
-            distanceToStep: 25,
+            distanceToFear: 25,
+            distanceToStep: 15,
             delayBeforeGoingHome: 500,
             cssClassGoingHome: "animate_going_home",
             timing: {
