@@ -9,24 +9,25 @@ function mobileDemo({
     new DotMatrix(
         svg,
         {
-            padding: 18,
+            padding: 15,
             spacing: 20,
             height: window.innerHeight,
             width: window.innerWidth,
-            svgBackgroundColor: "white",
-            dotRadius: 7,
-            dotFillColor: "diagonal",
-            distanceToFear: 25,
+            svgBackgroundColor: 'white',
+            dotRadius: 6,
+            dotFillColor: 'black',
+            dotColorPattern: 'diagonal',
+            distanceToFear: 30,
             distanceToStep: 15,
-            delayBeforeGoingHome: 500,
-            cssClassGoingHome: "animate_going_home",
+            delayBeforeGoingHome: 300,
+            cssClassGoingHome: 'animate_going_home',
             timing: {
-                fromHome: "ease",
-                backHome: "ease"
+                fromHome: 'ease',
+                backHome: 'ease'
             },
             duration: {
-                fromHome: "0.1s",
-                backHome: "1s"
+                fromHome: '0.1s',
+                backHome: '1s'
             }
         }
     );
