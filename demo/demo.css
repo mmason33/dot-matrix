@@ -51,7 +51,7 @@ body {
   font-family: "Cutive Mono", monospace;
   position: relative;
   overflow-x: hidden !important;
-  background-color: black;
+  /* background-color: black; */
 }
 
 .wrapper {
@@ -62,7 +62,7 @@ body {
 svg {
   display: inline-block !important;
   position: relative;
-  background: linear-gradient(45deg, #070707 43%, #070707 43%, #070707 43%, #000000 45%, #000000 70%) !important;
+  /* background: linear-gradient(45deg, #070707 43%, #070707 43%, #070707 43%, #000000 45%, #000000 70%) !important; */
   background-size: 1800% 1800%;
   -webkit-animation: demo 10s ease infinite;
   -moz-animation: demo 10s ease infinite;

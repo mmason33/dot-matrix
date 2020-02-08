@@ -150,7 +150,7 @@ class DotMatrix {
                     y: this.padding + this.rowPaddingAdjust + this.spacing * i
                 }
 
-                new SmartDot(
+                new TextDot(
                     this.rootSvg,
                     {
                         HOME_COORDINATE: coordinate,
@@ -217,7 +217,7 @@ class DotMatrix {
         const existingStyleTag = document.querySelector('.dot-matrix-style');
         const styleDeclaration = `
             svg {
-                background: ${this.svgBackgroundColor};
+                //background: ${this.svgBackgroundColor};
                 display: block;
             }
 
