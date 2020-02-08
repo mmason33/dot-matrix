@@ -31,7 +31,7 @@
                 position: absolute;
                 top: 0;
                 right: 0;
-                padding: 5px;
+                padding: 5px 15px;
                 z-index: 9999;
                 background-color: white;
                 text-align: left;
@@ -55,6 +55,8 @@
     <body>
         <div class="controls">
             <p>Dot Count: <span class="count"></span></p>
+            <small>Note: height & width values <br>will override cols and rows</small>
+            <br>
             <br>
             <label for="height">height
                 <input type="text" name="height" placeholder="height" value="0"/>
@@ -115,6 +117,7 @@
             <pre class="config"></pre>
 
         </div>
+        <h2 style="text-align: center;">Dot Matrix</h2>
         <div class="wrapper">
             <svg class="dot-matrix" width="100%" height="100%"></svg>
         </div>
@@ -160,7 +163,6 @@
                     return false;
                 }
 
-
                 window.moderate_dots_spacing = {
                     padding: 50,
                     spacing: 50,
@@ -171,7 +173,19 @@
                     DISTANCE_TO_STEP: 30,
                     DELAY_BEFORE_GOING_HOME: 200,
                     DOT_RADIUS: 5,
-                    DOT_FILL_COLOR: 'random',
+                    DOT_COLOR_PATTERN: 'vertical',
+                    PATTERN_COLORS: [
+                        'red',
+                        'orange',
+                        'yellow',
+                        'green',
+                        'cyan',
+                        'skyblue',
+                        'blue',
+                        'indigo',
+                        'violet',
+                        'lightgrey',
+                    ],
                     CSS_CLASS_GOING_HOME: 'animate_going_home',
                     transitions: {
                         timing: {
@@ -195,7 +209,19 @@
                     DISTANCE_TO_STEP: 30,
                     DELAY_BEFORE_GOING_HOME: 200,
                     DOT_RADIUS: 2,
-                    DOT_FILL_COLOR: 'random',
+                    DOT_COLOR_PATTERN: 'random',
+                    PATTERN_COLORS: [
+                        'red',
+                        'orange',
+                        'yellow',
+                        'green',
+                        'cyan',
+                        'skyblue',
+                        'blue',
+                        'indigo',
+                        'violet',
+                        'lightgrey',
+                    ],
                     CSS_CLASS_GOING_HOME: 'animate_going_home',
                     transitions: {
                         timing: {
@@ -219,7 +245,19 @@
                     DISTANCE_TO_STEP: 30,
                     DELAY_BEFORE_GOING_HOME: 200,
                     DOT_RADIUS: 50,
-                    DOT_FILL_COLOR: 'random',
+                    DOT_COLOR_PATTERN: 'random',
+                    PATTERN_COLORS: [
+                        'red',
+                        'orange',
+                        'yellow',
+                        'green',
+                        'cyan',
+                        'skyblue',
+                        'blue',
+                        'indigo',
+                        'violet',
+                        'lightgrey',
+                    ],
                     CSS_CLASS_GOING_HOME: 'animate_going_home',
                     transitions: {
                         timing: {
@@ -243,7 +281,19 @@
                     DISTANCE_TO_STEP: 30,
                     DELAY_BEFORE_GOING_HOME: 200,
                     DOT_RADIUS: 20,
-                    DOT_FILL_COLOR: 'random',
+                    DOT_COLOR_PATTERN: 'diagonal',
+                    PATTERN_COLORS: [
+                        'red',
+                        'orange',
+                        'yellow',
+                        'green',
+                        'cyan',
+                        'skyblue',
+                        'blue',
+                        'indigo',
+                        'violet',
+                        'lightgrey',
+                    ],
                     CSS_CLASS_GOING_HOME: 'animate_going_home',
                     transitions: {
                         timing: {
@@ -267,7 +317,19 @@
                     DISTANCE_TO_STEP: 10,
                     DELAY_BEFORE_GOING_HOME: 200,
                     DOT_RADIUS: 20,
-                    DOT_FILL_COLOR: 'random',
+                    DOT_COLOR_PATTERN: 'diagonal',
+                    PATTERN_COLORS: [
+                        'red',
+                        'orange',
+                        'yellow',
+                        'green',
+                        'cyan',
+                        'skyblue',
+                        'blue',
+                        'indigo',
+                        'violet',
+                        'lightgrey',
+                    ],
                     CSS_CLASS_GOING_HOME: 'animate_going_home',
                     transitions: {
                         timing: {
@@ -296,7 +358,19 @@
                     DISTANCE_TO_STEP: 10,
                     DELAY_BEFORE_GOING_HOME: 200,
                     DOT_RADIUS: 5,
-                    DOT_FILL_COLOR: 'random',
+                    DOT_COLOR_PATTERN: 'random',
+                    PATTERN_COLORS: [
+                        'red',
+                        'orange',
+                        'yellow',
+                        'green',
+                        'cyan',
+                        'skyblue',
+                        'blue',
+                        'indigo',
+                        'violet',
+                        'lightgrey',
+                    ],
                     CSS_CLASS_GOING_HOME: 'animate_going_home',
                     timing: {
                         fromHome: 'ease',
@@ -320,7 +394,20 @@
                         DISTANCE_TO_STEP: 10,
                         DELAY_BEFORE_GOING_HOME: 200,
                         DOT_RADIUS: 5,
-                        DOT_FILL_COLOR: 'random',
+
+                        DOT_COLOR_PATTERN: 'diagonal',
+                        PATTERN_COLORS: [
+                            'red',
+                            'orange',
+                            'yellow',
+                            'green',
+                            'cyan',
+                            'skyblue',
+                            'blue',
+                            'indigo',
+                            'violet',
+                            'lightgray',
+                        ],
                         CSS_CLASS_GOING_HOME: 'animate_going_home',
                         timing: {
                             fromHome: 'ease',
@@ -336,7 +423,7 @@
                 Array.from(document.querySelectorAll('input')).forEach(input => {
                     if (input.type === 'range') {
                         input.addEventListener('change', () => {
-                            document.dispatchEvent(new CustomEvent('matrix_reload'));
+                            document.dispatchEvent(new Event('matrix_reload'));
                         });
                         return false;
                     }
@@ -344,7 +431,7 @@
                     input.addEventListener('keyup', () => {
                         if (timeout) clearTimeout(timeout);
                         timeout = setTimeout(() => {
-                            document.dispatchEvent(new CustomEvent('matrix_reload'));
+                            document.dispatchEvent(new Event('matrix_reload'));
                         }, 250)
                     });
                 });
@@ -382,7 +469,10 @@
                     const svg = document.querySelector('.dot-matrix');
                     const config = document.querySelector('.config');
                     count.innerHTML = rows * columns;
-                    config.innerHTML = JSON.stringify({
+
+                    const configObject = {
+                        height,
+                        width,
                         padding,
                         spacing,
                         rows,
@@ -402,41 +492,22 @@
                             fromHome: '0.1s',
                             backHome: '1s',
                         },
-                    }, undefined, 2);
+                    };
+
+                    config.innerHTML = JSON.stringify(configObject, undefined, 2);
                     svg.remove();
                     const newSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
                     newSvg.classList = 'dot-matrix';
                     wrapper.appendChild(newSvg);
 
                     if (e.detail) {
-                        console.log(window[e.detail.config]);
                         new DotMatrix(newSvg, window[e.detail.config]);
                         return false;
                     }
 
                     new DotMatrix(
                         newSvg,
-                        {
-                            padding,
-                            spacing,
-                            rows,
-                            columns,
-                            svgBackgroundColor: backgroundColor,
-                            DOT_RADIUS: dotRadius,
-                            DOT_FILL_COLOR: dotFillColor,
-                            DISTANCE_TO_FEAR: fear,
-                            DISTANCE_TO_STEP: step,
-                            DELAY_BEFORE_GOING_HOME: !!delay === false ? false : delay,
-                            CSS_CLASS_GOING_HOME: 'animate_going_home',
-                            timing: {
-                                fromHome: 'ease',
-                                backHome: 'ease',
-                            },
-                            duration: {
-                                fromHome: '0.1s',
-                                backHome: '1s',
-                            },
-                        }
+                        configObject
                     )
                 });
             })();

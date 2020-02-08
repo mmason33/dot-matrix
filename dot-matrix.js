@@ -43,6 +43,19 @@ class DotMatrix {
         this.duration.backHome = Object(args.duration).hasOwnProperty('backHome') ? args.duration.backHome : '1s';
         this.timing.fromHome = Object(args.timing).hasOwnProperty('fromHome') ? args.timing.fromHome : 'ease';
         this.timing.backHome = Object(args.timing).hasOwnProperty('backHome') ? args.timing.backHome : 'ease';
+        this.DOT_COLOR_PATTERN = args.DOT_COLOR_PATTERN || 'random';
+        this.PATTERN_COLORS = args.PATTERN_COLORS || [
+            'red',
+            'orange',
+            'yellow',
+            'green',
+            'cyan',
+            'skyblue',
+            'blue',
+            'indigo',
+            'violet',
+            'grey',
+        ];
 
         // Is viewport less than or equal to 991
         this.IS_DESKTOP = window.innerWidth >= 992;
@@ -123,6 +136,7 @@ class DotMatrix {
     }
 
     createMatrix() {
+        // const arr = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'black', 'limegreen', 'CornFlowerBlue'];
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.columns; j++) {
                 let coordinate  =   {
@@ -139,7 +153,8 @@ class DotMatrix {
                         DISTANCE_TO_STEP: this.DISTANCE_TO_STEP,
                         DELAY_BEFORE_GOING_HOME: this.DELAY_BEFORE_GOING_HOME,
                         DOT_RADIUS: this.DOT_RADIUS,
-                        DOT_FILL_COLOR: this.DOT_FILL_COLOR === 'random' ? '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6) : this.DOT_FILL_COLOR,
+                        // DOT_FILL_COLOR: this.DOT_FILL_COLOR === 'random' ? '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6) : this.DOT_FILL_COLOR,
+                        DOT_FILL_COLOR: this.getColor(i, j),
                         CSS_CLASS_GOING_HOME: this.CSS_CLASS_GOING_HOME,
                         IS_DESKTOP: this.IS_DESKTOP,
                     }
@@ -148,25 +163,48 @@ class DotMatrix {
         }
     }
 
-    // -webkit-transition: ${this.timing.fromHome || 'ease'} transform ${this.duration.fromHome || '0.1s'};
-    // -webkit-transition: ${this.timing.fromHome || 'ease'} -webkit-transform ${this.duration.fromHome || '0.1s'};
-    // -o-transition: ${this.timing.fromHome || 'ease'} transform ${this.duration.fromHome || '0.1s'};
-    // transition: ${this.timing.fromHome || 'ease'} transform ${this.duration.fromHome || '0.1s'};
-    // -webkit-transition: ${this.timing.backHome || 'ease'} transform ${this.duration.backHome || '1s'};
-    // -webkit-transition: ${this.timing.backHome || 'ease'} -webkit-transform ${this.duration.backHome || '1s'};
-    // -o-transition: ${this.timing.backHome || 'ease'} transform ${this.duration.backHome || '1s'};
-    // transition: ${this.timing.backHome || 'ease'} transform ${this.duration.backHome || '1s'};
+    getColor(row, column) {
+        let color;
+        let startIndex;
+        let offsetIndex;
+        console.log(this.DOT_COLOR_PATTERN)
+        switch(this.DOT_COLOR_PATTERN) {
+            case 'random':
+                color = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
+                break;
+            case 'diagonal':
+                // Diagonal Rainbow
+                startIndex = (column % this.PATTERN_COLORS.length) - (row % this.PATTERN_COLORS.length);
+                offsetIndex = startIndex + 1;
+                // Pass undefined to wrap array and combat weird slice behavior when startIndex is -1
+                color = this.PATTERN_COLORS.slice(startIndex, startIndex == -1 ? undefined : offsetIndex);
+                break;
+            case 'vertical':
+                console.log('hit')
+                // Vertical Rainbow
+                startIndex = row % this.PATTERN_COLORS.length;
+                offsetIndex =  -1;
 
-    // circle {
-    //     transition-timing-function: ${this.timing.fromHome || 'ease'};
-    //     transition-property: transform;
-    //     transition-duration: ${this.duration.fromHome || '0.1s'};
-    // }
-    // circle.animate_going_home {
-    //     transition-timing-function: ${this.timing.backHome || 'ease'};
-    //     transition-property: transform;
-    //     transition-duration: ${this.duration.backHome || '1s'};
-    // }
+                if ( startIndex < this.PATTERN_COLORS.length ) {
+                    offsetIndex =  startIndex + 1;
+                }
+
+                color = this.PATTERN_COLORS.slice(startIndex,offsetIndex);
+                break;
+            case 'horizontal':
+                // Horizontal Rainbow
+                startIndex = column % this.PATTERN_COLORS.length;
+                offsetIndex =  -1;
+
+                if ( startIndex < this.PATTERN_COLORS.length ) {
+                    offsetIndex =  startIndex + 1;
+                }
+
+                color = this.PATTERN_COLORS.slice(startIndex,offsetIndex);
+        }
+
+        return color;
+    }
 
     injectCss() {
         const existingStyleTag = document.querySelector('.dot-matrix-style');
@@ -217,9 +255,6 @@ class DotMatrix {
 
     handleMouseLeave() {
         this.rootSvg.addEventListener('mouseleave', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-
             setTimeout(() => {
                 this.rootSvg.dispatchEvent(new MouseEvent('mousemove'));
             }, 500);
