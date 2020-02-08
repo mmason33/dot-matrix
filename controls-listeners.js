@@ -1,4 +1,5 @@
 function controlsListeners() {
+    let timeout;
     Array.from(document.querySelectorAll('input')).forEach(input => {
         if (input.type === 'range') {
             input.addEventListener('change', () => {

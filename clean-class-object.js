@@ -11,7 +11,6 @@ function cleanObjectClass(matrix) {
     delete cleanedMatrix.rowPaddingAdjust;
     delete cleanedMatrix.IS_DESKTOP;
     delete cleanedMatrix.calculated;
-    console.log('cleaned object', cleanedMatrix);
 
     return cleanedMatrix;
 }

@@ -51,6 +51,7 @@ body {
   font-family: "Cutive Mono", monospace;
   position: relative;
   overflow-x: hidden !important;
+  background-color: black;
 }
 
 .wrapper {
@@ -61,7 +62,7 @@ body {
 svg {
   display: inline-block !important;
   position: relative;
-  background: linear-gradient(45deg, #070707 43%, #070707 43%, #070707 43%, #000000 45%, #000000 70%);
+  background: linear-gradient(45deg, #070707 43%, #070707 43%, #070707 43%, #000000 45%, #000000 70%) !important;
   background-size: 1800% 1800%;
   -webkit-animation: demo 10s ease infinite;
   -moz-animation: demo 10s ease infinite;
@@ -76,8 +77,9 @@ svg {
   background-color: white;
   text-align: left;
   overflow: scroll;
-  max-width: 320px;
+  width: 320px;
   box-sizing: border-box;
+  background-color: black;
 }
 
 .config {
@@ -88,15 +90,28 @@ svg {
 label {
   display: block;
   text-transform: uppercase;
-  padding: 10px 0;
+  font-size: 14px;
+  margin: 0 0 5px;
+  color: rgb(192, 192, 192);
+}
+
+p,
+pre {
+  color: rgb(192, 192, 192);
 }
 
 input {
   margin-left: 5px;
+  opacity: .85 !important;
 }
 
 button {
   display: block;
+  margin: 0 0 5px;
+  background-color: transparent;
+  color: rgb(192, 192, 192);
+  border-color: rgb(192, 192, 192);
+  padding: 3px 8px;
 }
 
 h1 {
@@ -107,4 +122,5 @@ h1 {
   color: white;
   z-index: 99999;
   pointer-events: none;
+  opacity: .35;
 }

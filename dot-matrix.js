@@ -30,7 +30,7 @@ class DotMatrix {
         this.padding = args.padding || 0;
         this.colPaddingAdjust = 0;
         this.rowPaddingAdjust = 0;
-        this.svgBackgroundColor = args.svgBackgroundColor || 'lightgrey';
+        this.svgBackgroundColor = args.svgBackgroundColor || 'black';
         this.distanceToFear = args.distanceToFear || 50;
         this.distanceToStep = args.distanceToStep || 10;
         this.delayBeforeGoingHome = args.delayBeforeGoingHome == false ? false : args.delayBeforeGoingHome || 500;
@@ -174,6 +174,9 @@ class DotMatrix {
         let startIndex;
         let offsetIndex;
         switch(this.dotColorPattern) {
+            case 'fill':
+                color = this.dotFillColor;
+                break;
             case 'random':
                 color = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
                 break;
@@ -185,7 +188,6 @@ class DotMatrix {
                 color = this.patternColors.slice(startIndex, startIndex == -1 ? undefined : offsetIndex);
                 break;
             case 'vertical':
-                console.log('hit')
                 // Vertical Rainbow
                 startIndex = row % this.patternColors.length;
                 offsetIndex =  -1;
@@ -215,7 +217,7 @@ class DotMatrix {
         const existingStyleTag = document.querySelector('.dot-matrix-style');
         const styleDeclaration = `
             svg {
-                // background-color: ${this.svgBackgroundColor};
+                background: ${this.svgBackgroundColor};
                 display: block;
             }
 

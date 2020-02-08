@@ -1,8 +1,13 @@
+function getExampleConfig(configName, width) {
+    window[configName].width = width;
+    return window[configName];
+}
+
 window.moderate_dots_spacing = {
     padding: 50,
     spacing: 50,
-    rows: 10,
-    columns: 30,
+    width: window.adjustedWidth,
+    height: window.innerHeight,
     svgBackgroundColor: 'white',
     distanceToFear: 100,
     distanceToStep: 30,
@@ -37,8 +42,8 @@ window.moderate_dots_spacing = {
 window.tenK_smalls_dots = {
     padding: 10,
     spacing: 10,
-    rows: 100,
-    columns: 100,
+    width: window.adjustedWidth,
+    height: window.innerHeight,
     svgBackgroundColor: 'white',
     distanceToFear: 100,
     distanceToStep: 30,
@@ -73,8 +78,8 @@ window.tenK_smalls_dots = {
 window.spaced_large_dots = {
     padding: 50,
     spacing: 120,
-    rows: 5,
-    columns: 5,
+    width: window.adjustedWidth,
+    height: window.innerHeight,
     svgBackgroundColor: 'white',
     distanceToFear: 100,
     distanceToStep: 30,
@@ -109,14 +114,14 @@ window.spaced_large_dots = {
 window.spaced_medium_dots = {
     padding: 50,
     spacing: 50,
-    rows: 10,
-    columns: 30,
+    width: window.adjustedWidth,
+    height: window.innerHeight,
     svgBackgroundColor: 'white',
     distanceToFear: 50,
     distanceToStep: 30,
     delayBeforeGoingHome: 200,
     dotRadius: 20,
-    dotColorPattern: 'diagonal',
+    dotColorPattern: 'horizontal',
     patternColors: [
         'red',
         'orange',
@@ -145,8 +150,8 @@ window.spaced_medium_dots = {
 window.dense_group = {
     padding: 50,
     spacing: 20,
-    rows: 20,
-    columns: 20,
+    width: window.adjustedWidth,
+    height: window.innerHeight,
     svgBackgroundColor: 'white',
     distanceToFear: 25,
     distanceToStep: 10,
