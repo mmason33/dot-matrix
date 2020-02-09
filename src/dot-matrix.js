@@ -93,7 +93,7 @@ class DotMatrix {
             : this.calculateDimensions();
         this.injectCss();
         this.createMatrix();
-        console.log(this);
+
         return this;
     }
 
@@ -240,7 +240,7 @@ class DotMatrix {
         const existingStyleTag = document.querySelector('.dot-matrix-style');
         const letterDotStyleDeclaration = `
             svg {
-                //background: ${this.svgBackgroundColor};
+                background-color ${this.svgBackgroundColor};
                 display: block;
             }
 
@@ -255,7 +255,7 @@ class DotMatrix {
 
         const smartDotStyleDeclaration = `
             svg {
-                //background: ${this.svgBackgroundColor};
+                background-color: ${this.svgBackgroundColor};
                 display: block;
             }
 

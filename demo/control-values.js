@@ -5,6 +5,7 @@ const delay = document.querySelector('input[name="delay"]');
 const step = document.querySelector('input[name="step-distance"]');
 const dotRadius = document.querySelector('input[name="dotRadius"]');
 const dotFillColor = document.querySelector('input[name="dotFillColor"]');
+const backgroundColor = document.querySelector('input[name="backgroundColor"]');
 
 function getControlValues() {
     const updated_spacing = parseInt(spacing.value);
@@ -23,6 +24,7 @@ function getControlValues() {
         distanceToStep: updated_step,
         dotRadius: updated_dotRadius,
         dotFillColor: updated_dotFillColor,
+        svgBackgroundColor: backgroundColor.value || false,
     };
 
     return vals;
@@ -35,4 +37,5 @@ function setControlValues(cleanMatrixObject) {
     delay.setAttribute('value', cleanMatrixObject.animationDelay);
     step.setAttribute('value', cleanMatrixObject.distanceToStep);
     dotRadius.setAttribute('value', cleanMatrixObject.dotRadius);
+    backgroundColor.setAttribute('value', cleanMatrixObject.svgBackgroundColor);
 }

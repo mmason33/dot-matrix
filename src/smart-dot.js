@@ -50,7 +50,6 @@ class SmartDot extends BaseDot {
         // Save our poor CPU
         event.stopPropagation();
         event.preventDefault();
-        // console.log(event);	//	Debugging Only
         const touch = event.touches[0];
         this.respondToInput({
             x: touch.clientX,
@@ -65,7 +64,6 @@ class SmartDot extends BaseDot {
         // Save our poor CPU
         event.stopPropagation();
         event.preventDefault();
-        //console.log(event);	//	Debugging Only
         this.respondToInput({
             x: event.layerX,
             y: event.layerY

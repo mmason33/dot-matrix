@@ -6,6 +6,8 @@ function cleanObjectClass(matrix) {
 
     cleanedMatrix.rows = Math.round(cleanedMatrix.rows);
     cleanedMatrix.columns = Math.round(cleanedMatrix.columns);
+    delete cleanedMatrix.wordsList;
+    delete cleanedMatrix.letterFillColor;
     delete cleanedMatrix.args;
     delete cleanedMatrix.rootSvg;
     delete cleanedMatrix.colPaddingAdjust;
