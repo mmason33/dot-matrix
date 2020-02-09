@@ -1,6 +1,9 @@
 # DotMatrx.js
 DotMatrix.js is a small, performant class-based library. DotMatrix utilizes SVG(s) instead of canvas for performance and development reasons. SVG(s), CSS3 transitions and JavaScript were used to create the beautiful animations.
 
+##### Playground
+[Configurable Demo](https://weareenvoy.github.io/dot-matrix/)
+
 ### Configurations
 
 `new DotMatrix(rootSVG, args);`
@@ -30,7 +33,7 @@ DotMatrix.js is a small, performant class-based library. DotMatrix utilizes SVG(
 | svgBackgroundColor| string| black - options: hex color, color literal | yes|
 | cssClassGoingHome| string| animate_going_home| yes|
 | timing| object| {fromHome: 'ease',backHome: 'ease'}| yes|
-| duration| object| {fromHome: 'ease',backHome: 'ease'}| yes|
+| duration| object| {fromHome: '0.1s',backHome: '1s'}| yes|
 
 ##### Example
 ```javascript
