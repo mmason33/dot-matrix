@@ -9,6 +9,18 @@ body {
   background-color: black;
 }
 
+.github-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  padding: 10px
+}
+
+.github-link a {
+  color: white;
+}
+
 .wrapper {
   position: fixed;
   box-sizing: border-box;
