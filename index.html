@@ -6,9 +6,19 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Dot Matrix🔥</title>
         <link href="https://fonts.googleapis.com/css?family=Cutive+Mono&display=swap" rel="stylesheet">
-        <link href="demo.css" rel="stylesheet">
+        <link href="demo/demo.css" rel="stylesheet">
     </head>
     <body>
+        <div class="mobile-trigger">
+            <svg class="svg-trigger">
+                <path transform="translate(13, 13)" fill="rgb(192, 192, 192)" y="100" d="M24 13.616v-3.232c-1.651-.587-2.694-.752-3.219-2.019v-.001c-.527-1.271.1-2.134.847-3.707l-2.285-2.285c-1.561.742-2.433 1.375-3.707.847h-.001c-1.269-.526-1.435-1.576-2.019-3.219h-3.232c-.582 1.635-.749 2.692-2.019 3.219h-.001c-1.271.528-2.132-.098-3.707-.847l-2.285 2.285c.745 1.568 1.375 2.434.847 3.707-.527 1.271-1.584 1.438-3.219 2.02v3.232c1.632.58 2.692.749 3.219 2.019.53 1.282-.114 2.166-.847 3.707l2.285 2.286c1.562-.743 2.434-1.375 3.707-.847h.001c1.27.526 1.436 1.579 2.019 3.219h3.232c.582-1.636.75-2.69 2.027-3.222h.001c1.262-.524 2.12.101 3.698.851l2.285-2.286c-.744-1.563-1.375-2.433-.848-3.706.527-1.271 1.588-1.44 3.221-2.021zm-12 2.384c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4z"/>
+            </svg>
+        </div>
+        <div class="mobile-controls">
+            <button class="mobile_small_dots">Small Dots</button>
+            <button class="mobile_medium_dots">Medium Dots</button>
+            <button class="mobile_large_dots">Large Dots</button>
+        </div>
         <div class="controls">
             <p>Dot Count: <span class="count"></span></p>
 
@@ -39,6 +49,10 @@
             <label for="dotFillColor">dotFillColor
                 <input type="text" name="dotFillColor" placeholder="HEX or string" value=""/>
             </label>
+
+            <label for="backgroundColor">backgroundColor
+                <input type="text" name="backgroundColor" placeholder="HEX or string" value=""/>
+            </label>
             <br>
             <p>Example</p>
             <button class="moderate_dots_spacing">Small Dots</button>
@@ -54,15 +68,18 @@
             <h1>Dot Matrix</h1>
             <svg class="dot-matrix" width="100%" height="100%"></svg>
         </div>
-        <script src="coordinate-translator.js"></script>
-        <script src="smart-dot.js"></script>
-        <script src="dot-matrix.js"></script>
-        <script src="examples.js"></script>
-        <script src="demo-dimensions.js"></script>
-        <script src="controls-listeners.js"></script>
-        <script src="mobile-demo.js"></script>
-        <script src="clean-class-object.js"></script>
-        <script src="control-values.js"></script>
+        <script src="src/coordinate-translator.js"></script>
+        <script src="src/base-dot.js"></script>
+        <script src="src/smart-dot.js"></script>
+        <script src="src/letter-dot.js"></script>
+        <script src="src/dot-matrix.js"></script>
+        <script src="demo/desktop-examples.js"></script>
+        <script src="demo/mobile-examples.js"></script>
+        <script src="demo/demo-dimensions.js"></script>
+        <script src="demo/controls-listeners.js"></script>
+        <script src="demo/mobile-demo.js"></script>
+        <script src="demo/clean-class-object.js"></script>
+        <script src="demo/control-values.js"></script>
         <script>
             (() => {
                 //--------------------------------------------------------
@@ -99,13 +116,16 @@
                     document.querySelector('.dot-matrix'),
                     {
                         padding: 50,
-                        spacing: 30,
+                        spacing: 80,
                         width: window.adjustedWidth,
                         height: window.innerHeight,
                         distanceToFear: 100,
                         distanceToStep: 10,
-                        delayBeforeGoingHome: 200,
-                        dotRadius: 5,
+                        animationDelay: 200,
+                        dotRadius: 10,
+                        dotType: 'smart',
+                        dotFillColor: 'green',
+                        letterFillColor: 'white',
                         dotColorPattern: 'diagonal',
                         patternColors: [
                             'red',
@@ -195,8 +215,9 @@
                         dotColorPattern: !!values.dotFillColor ? 'fill' : 'diagonal',
                         distanceToFear: values.distanceToFear,
                         distanceToStep: values.distanceToStep,
-                        delayBeforeGoingHome: !!values.delayBeforeGoingHome === false ? false : values.delayBeforeGoingHome,
+                        animationDelay: !!values.animationDelay === false ? false : values.animationDelay,
                         cssClassGoingHome: 'animate_going_home',
+                        svgBackgroundColor: values.svgBackgroundColor || 'black',
                         timing: {
                             fromHome: 'ease',
                             backHome: 'ease',

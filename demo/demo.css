@@ -1,48 +1,3 @@
-@-webkit-keyframes demo {
-  0% {
-    background-position: 0% 82%;
-  }
-  50% {
-    background-position: 100% 19%;
-  }
-  100% {
-    background-position: 0% 82%;
-  }
-}
-@-moz-keyframes demo {
-  0% {
-    background-position: 0% 82%;
-  }
-  50% {
-    background-position: 100% 19%;
-  }
-  100% {
-    background-position: 0% 82%;
-  }
-}
-@-o-keyframes demo {
-  0% {
-    background-position: 0% 82%;
-  }
-  50% {
-    background-position: 100% 19%;
-  }
-  100% {
-    background-position: 0% 82%;
-  }
-}
-@keyframes demo {
-  0% {
-    background-position: 0% 82%;
-  }
-  50% {
-    background-position: 100% 19%;
-  }
-  100% {
-    background-position: 0% 82%;
-  }
-}
-
 html,
 body {
   height: 100%;
@@ -62,12 +17,8 @@ body {
 svg {
   display: inline-block !important;
   position: relative;
-  background: linear-gradient(45deg, #070707 43%, #070707 43%, #070707 43%, #000000 45%, #000000 70%) !important;
-  background-size: 1800% 1800%;
-  -webkit-animation: demo 10s ease infinite;
-  -moz-animation: demo 10s ease infinite;
-  animation: demo 10s ease infinite;
 }
+
 .controls {
   position: absolute;
   top: 0;
@@ -123,4 +74,63 @@ h1 {
   z-index: 99999;
   pointer-events: none;
   opacity: .35;
+}
+
+.mobile-controls,
+.mobile-trigger,
+.trigger {
+  display: none;
+}
+
+@media screen and (max-width: 991px) {
+
+  h1 {
+    font-size: 25px;
+  }
+
+  .mobile-controls {
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background-color: black;
+    opacity: 0;
+    pointer-events: none;
+    transition: ease opacity .5s;
+  }
+
+  .mobile-controls.show {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .mobile-controls button {
+    font-size: 7vw;
+    font-family: "Cutive Mono", monospace;
+    margin: 20px auto;
+    flex: 0 0 90%;
+  }
+
+  .mobile-trigger {
+    display: block;
+    position: absolute;
+    z-index: 999999;
+    height: 50px;
+    width: 50px;
+    opacity: 1;
+    transition: ease opacity .3s;
+  }
+
+  .mobile-trigger.hide {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .svg-trigger {
+    height: 50px;
+    width: 50px;
+  }
 }

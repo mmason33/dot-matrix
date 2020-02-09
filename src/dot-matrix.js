@@ -8,7 +8,7 @@
  * @param {String} svgBackgroundColor - The background color of the whole svg
  * @param {Number} distanceToFear - The threshold of when the dot will fear and run away from the mouse
  * @param {Number} distanceToStep - The size of the initial step away from the mouse once in the fear zone
- * @param {Number} delayBeforeGoingHome - The animation delay before returning back home -> in milleseconds
+ * @param {Number} animationDelay - The animation delay before returning back home -> in milleseconds
  * @param {Number} dotRadius - Radius of the dots
  * @param {String} dotFillColor - The fill color of the dot -> default is random
  * @param {String} cssClassGoingHome - The class to animate the dot going home -> also used in the style tag injection
@@ -25,17 +25,28 @@
  */
 class DotMatrix {
     constructor(rootSvg, args) {
+        // Short circuit defaults
+        this.args = args;
         this.rootSvg = rootSvg;
-        this.spacing = args.spacing || 0;
-        this.padding = args.padding || 0;
         this.colPaddingAdjust = 0;
-        this.rowPaddingAdjust = 0;
-        this.svgBackgroundColor = args.svgBackgroundColor || 'black';
+        this.animationDelay = args.animationDelay == false ? false : args.animationDelay || 500;
         this.distanceToFear = args.distanceToFear || 50;
         this.distanceToStep = args.distanceToStep || 10;
-        this.delayBeforeGoingHome = args.delayBeforeGoingHome == false ? false : args.delayBeforeGoingHome || 500;
-        this.dotRadius = args.dotRadius || 2;
         this.dotFillColor = args.dotFillColor || 'black';
+        this.dotRadius = args.dotRadius || 5;
+        this.dotType = args.dotType || 'smart';
+        this.letterFillColor = args.letterFillColor || 'white';
+        this.padding = args.padding || 30;
+        this.rowPaddingAdjust = 0;
+        this.spacing = args.spacing || 30;
+        this.svgBackgroundColor = args.svgBackgroundColor || 'black';
+        this.wordsList = args.wordsList || [
+            'Some Word',
+            'Some Word',
+            'Some Word',
+            'Some Word',
+            'Some Word',
+        ];
         this.cssClassGoingHome = args.cssClassGoingHome || 'animate_going_home';
         this.timing = args.timing || {};
         this.duration = args.duration || {};
@@ -58,7 +69,7 @@ class DotMatrix {
         ];
 
         // Is viewport less than or equal to 991
-        this.IS_DESKTOP = window.innerWidth >= 992;
+        this.isDesktop = window.innerWidth >= 992;
 
         // Specified dimensions
         this.width = args.width;
@@ -82,9 +93,6 @@ class DotMatrix {
             : this.calculateDimensions();
         this.injectCss();
         this.createMatrix();
-
-        // REVIST FUNCTION
-        // this.handleMouseLeave();
 
         return this;
     }
@@ -150,21 +158,36 @@ class DotMatrix {
                     y: this.padding + this.rowPaddingAdjust + this.spacing * i
                 }
 
-                new SmartDot(
-                    this.rootSvg,
-                    {
-                        HOME_COORDINATE: coordinate,
-                        UNIQUE_IDENTIFIER: i,
-                        distanceToFear: this.distanceToFear,
-                        distanceToStep: this.distanceToStep,
-                        delayBeforeGoingHome: this.delayBeforeGoingHome,
-                        dotRadius: this.dotRadius,
-                        // dotFillColor: this.dotFillColor === 'random' ? '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6) : this.dotFillColor,
-                        dotFillColor: this.getColor(i, j),
-                        cssClassGoingHome: this.cssClassGoingHome,
-                        IS_DESKTOP: this.IS_DESKTOP,
-                    }
-                );
+                switch(this.dotType) {
+                    case 'smart':
+                        new SmartDot(this.rootSvg, {
+                            homeCoordinate: coordinate,
+                            uniqueIdentifier: i,
+                            distanceToFear: this.distanceToFear,
+                            distanceToStep: this.distanceToStep,
+                            animationDelay: this.animationDelay,
+                            dotRadius: this.dotRadius,
+                            dotFillColor: this.getColor(i, j),
+                            cssClassGoingHome: this.cssClassGoingHome,
+                            isDesktop: this.isDesktop,
+                        });
+                        break;
+                    case 'letter':
+                        const word = this.wordsList[i] || false;
+
+                        new LetterDot(this.rootSvg, {
+                            homeCoordinate: coordinate,
+                            uniqueIdentifier: i,
+                            distanceToFear: this.distanceToFear,
+                            animationDelay: this.animationDelay,
+                            dotRadius: this.dotRadius,
+                            dotFillColor: this.getColor(i, j),
+                            dotLetter: word ? word.charAt(j) : false,
+                            letterFillColor: this.args.letterFillColor || 'white',
+                            isDesktop: this.isDesktop,
+                        });
+                        break;
+                }
             }
         }
     }
@@ -187,7 +210,7 @@ class DotMatrix {
                 // Pass undefined to wrap array and combat weird slice behavior when startIndex is -1
                 color = this.patternColors.slice(startIndex, startIndex == -1 ? undefined : offsetIndex);
                 break;
-            case 'vertical':
+            case 'horizontal':
                 // Vertical Rainbow
                 startIndex = row % this.patternColors.length;
                 offsetIndex =  -1;
@@ -198,7 +221,7 @@ class DotMatrix {
 
                 color = this.patternColors.slice(startIndex,offsetIndex);
                 break;
-            case 'horizontal':
+            case 'vertical':
                 // Horizontal Rainbow
                 startIndex = column % this.patternColors.length;
                 offsetIndex =  -1;
@@ -215,13 +238,29 @@ class DotMatrix {
 
     injectCss() {
         const existingStyleTag = document.querySelector('.dot-matrix-style');
-        const styleDeclaration = `
+        const letterDotStyleDeclaration = `
             svg {
-                background: ${this.svgBackgroundColor};
+                background-color ${this.svgBackgroundColor};
                 display: block;
             }
 
+            text {
+                transition: ease opacity .5s;
+            }
+
             circle {
+                transition: ease opacity 1s;
+            }
+        `;
+
+        const smartDotStyleDeclaration = `
+            svg {
+                background-color: ${this.svgBackgroundColor};
+                display: block;
+            }
+
+            circle,
+            text {
                 -webkit-transition-timing-function: ${this.timing.fromHome || 'ease'};
                      -o-transition-timing-function: ${this.timing.fromHome || 'ease'};
                         transition-timing-function: ${this.timing.fromHome || 'ease'};
@@ -235,7 +274,9 @@ class DotMatrix {
                         transition-duration: ${this.duration.fromHome || '0.1s'};
             }
 
-            circle.animate_going_home {
+
+            circle.animate_going_home,
+            text.animate_going_home {
                 -webkit-transition-timing-function: ${this.timing.backHome || 'ease'};
                      -o-transition-timing-function: ${this.timing.backHome || 'ease'};
                         transition-timing-function: ${this.timing.backHome || 'ease'};
@@ -250,6 +291,10 @@ class DotMatrix {
             }
         `;
 
+        const styleDeclaration = this.dotType === 'smart' ?
+            smartDotStyleDeclaration :
+            letterDotStyleDeclaration;
+
         if (existingStyleTag) {
                 existingStyleTag.textContent = styleDeclaration;
                 return false;
@@ -259,14 +304,5 @@ class DotMatrix {
         style.classList = 'dot-matrix-style';
         style.textContent = styleDeclaration;
         document.querySelector('head').appendChild(style);
-    }
-
-    // TODO: REVISIT
-    handleMouseLeave() {
-        this.rootSvg.addEventListener('mouseleave', (e) => {
-            setTimeout(() => {
-                this.rootSvg.dispatchEvent(new MouseEvent('mousemove'));
-            }, 500);
-        });
     }
 }
