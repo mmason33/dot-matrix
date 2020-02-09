@@ -99,6 +99,10 @@ h1 {
   h1 {
     font-size: 25px;
   }
+  
+  .github-link {
+    display: none;
+  }
 
   .mobile-controls {
     display: flex;
