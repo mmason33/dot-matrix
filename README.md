@@ -1,4 +1,5 @@
 # DotMatrx.js
+![DotMatrixLogo](https://weareenvoy.github.io/dot-matrix/images/dot-matrix-logo-big.png)
 DotMatrix.js is a small, performant class-based library. DotMatrix utilizes SVG(s) instead of canvas for performance and development reasons. SVG(s), CSS3 transitions and JavaScript were used to create the beautiful animations.
 
 ### Playground
