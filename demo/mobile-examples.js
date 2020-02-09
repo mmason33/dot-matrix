@@ -53,8 +53,8 @@ window.mobile_large_dots = {
     dotRadius: 40,
     dotFillColor: 'black',
     dotColorPattern: 'random',
-    distanceToFear: 50,
-    distanceToStep: 40,
+    distanceToFear: 60,
+    distanceToStep: 80,
     animationDelay: 300,
     cssClassGoingHome: 'animate_going_home',
     timing: {
