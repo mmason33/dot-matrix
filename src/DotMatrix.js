@@ -40,13 +40,7 @@ class DotMatrix {
         this.rowPaddingAdjust = 0;
         this.spacing = args.spacing || 30;
         this.svgBackgroundColor = args.svgBackgroundColor || 'black';
-        this.wordsList = args.wordsList || [
-            'Some Word',
-            'Some Word',
-            'Some Word',
-            'Some Word',
-            'Some Word',
-        ];
+        this.wordsList = args.wordsList;
         this.cssClassGoingHome = args.cssClassGoingHome || 'animate_going_home';
         this.timing = args.timing || {};
         this.duration = args.duration || {};
@@ -158,6 +152,7 @@ class DotMatrix {
                     y: this.padding + this.rowPaddingAdjust + this.spacing * i
                 }
 
+                // Decide type of dot
                 switch(this.dotType) {
                     case 'smart':
                         new SmartDot(this.rootSvg, {
@@ -173,7 +168,7 @@ class DotMatrix {
                         });
                         break;
                     case 'letter':
-                        const word = this.wordsList[i] || false;
+                        const word = this.wordsList ? this.wordsList[i] : false;
 
                         new LetterDot(this.rootSvg, {
                             homeCoordinate: coordinate,
@@ -275,8 +270,8 @@ class DotMatrix {
             }
 
 
-            circle.animate_going_home,
-            text.animate_going_home {
+            circle.${this.cssClassGoingHome || 'animate_going_home'},
+            text.${this.cssClassGoingHome || 'animate_going_home'} {
                 -webkit-transition-timing-function: ${this.timing.backHome || 'ease'};
                      -o-transition-timing-function: ${this.timing.backHome || 'ease'};
                         transition-timing-function: ${this.timing.backHome || 'ease'};

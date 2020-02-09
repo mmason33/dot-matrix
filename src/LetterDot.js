@@ -2,7 +2,7 @@ class LetterDot extends BaseDot {
     constructor(svg, args) {
         super(svg, args);
         this.dotLetter = args.dotLetter;
-        this.letterFillColor = args.letterFillColor;
+        this.letterFillColor = args.letterFillColor || 'white';
 
         if (this.dotLetter) this.insertTextElement();
     }

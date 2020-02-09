@@ -5,10 +5,12 @@ DotMatrix.js is a small, performant class-based library. DotMatrix utilizes SVG(
 
 `new DotMatrix(rootSVG, args);`
 
+`rootSVG`
 | property          | type              | default   | optional   |
 | ----------------- |:-----------------:| -----:    | ----------:|
 | rootSvg           | node              | undefined | no         |
 
+`args`
 | property          | type              | default   | optional   |
 | ----------------- | ----------------- | -----     | ---------- |
 | height            | number            | undefined | yes        |
@@ -24,19 +26,40 @@ DotMatrix.js is a small, performant class-based library. DotMatrix utilizes SVG(
 | dotType           | string            | smart     | yes        |
 | padding           | number            | 30        | yes        |
 | patternColors | array | ['red','orange','yellow','green','cyan','skyblue','blue','indigo','violet','grey']| yes |
-| | | | |
-| | | | |
-| | | | |
-| | | | |
-| | | | |
+| spacing| number| 30| yes|
+| svgBackgroundColor| string| black| yes|
+| cssClassGoingHome| string| animate_going_home| yes|
+| timing| object| {fromHome: 'ease',backHome: 'ease'}| yes|
+| duration| object| {fromHome: 'ease',backHome: 'ease'}| yes|
+
+**LetterDot specific properties**
+| property          | type              | default   | optional   |
+| ----------------- |:-----------------:| -----:    | ----------:|
+| letterFillColor   | string            | white     | yes        |
+| wordsList         | array             | undefined | no         |
 
 
+`new BaseDot(rootSVG, args);`
+| property          | type              | default   | optional   |
+| ----------------- |:-----------------:| -----:    | ----------:|
+| dotFillColor      | string            | black     | yes        |
+| dotRadius         | number            | 5         | yes        |
+| animationDelay    | number/boolean    | 500       | yes        |
+| distanceToFear    | nunber            | 50        | yes        |
+| uniqueIdentifier  | number/iterator   | undefined | no         |
+| isDesktop         | boolean           | undefined | no         |
 
 
+**Extends BaseDot**
 
-| | | | |
-| | | | |
-| | | | |
-| | | | |
-| | | | |
-| | | | |
+`new SmartDot(rootSVG, args);`
+| property          | type              | default   | optional   |
+| ----------------- |:-----------------:| -----:    | ----------:|
+| distanceToStep    | nunber            | 50        | yes        |
+| cssClassGoingHome  | string           | animate_going_home | yes|
+
+`new LetterDot(rootSVG, args);`
+| property          | type              | default   | optional   |
+| ----------------- |:-----------------:| -----:    | ----------:|
+| dotLetter    | string            | undefined        | no        |
+| letterFillColor  | string           | white | yes|
