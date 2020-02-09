@@ -1,10 +1,10 @@
 class BaseDot {
     constructor(svg, args) {
         this.svg = svg;
-        this.dotRadius = args.dotRadius;
-        this.dotFillColor = args.dotFillColor;
-        this.distanceToFear = args.distanceToFear;
-        this.animationDelay = args.animationDelay;
+        this.dotRadius = args.dotRadius || 5;
+        this.dotFillColor = args.dotFillColor || 'black';
+        this.distanceToFear = args.distanceToFear || 50;
+        this.animationDelay = args.animationDelay || 500;
         this.uniqueIdentifier = args.uniqueIdentifier;
         this.isDesktop = args.isDesktop;
         this.eventType = this.isDesktop ? 'mousemove' : 'touchmove';
@@ -12,8 +12,8 @@ class BaseDot {
         // Beginning home coordinates => Object passed by reference so the property values need to referenced and retrieved
         this.coordinates = {
             home: {
-                x: args.homeCoordinate.x.toFixed(8),
-                y: args.homeCoordinate.y.toFixed(8),
+                x: args.homeCoordinate.x,
+                y: args.homeCoordinate.y,
             },
             current: {
                 x: args.homeCoordinate.x,

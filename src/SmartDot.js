@@ -1,8 +1,8 @@
 class SmartDot extends BaseDot {
     constructor(svg, args) {
         super(svg, args);
-        this.distanceToStep = args.distanceToStep;
-        this.cssClassGoingHome = args.cssClassGoingHome;
+        this.distanceToStep = args.distanceToStep || 50;
+        this.cssClassGoingHome = args.cssClassGoingHome || 'animate_going_home';
     }
 
     baseState() {
