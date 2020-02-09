@@ -168,7 +168,7 @@ class DotMatrix {
                         });
                         break;
                     case 'letter':
-                        const word = this.wordsList ? this.wordsList[i] : false;
+                        const word = this.wordsList ? this.wordsList[i] : 'Z';
 
                         new LetterDot(this.rootSvg, {
                             homeCoordinate: coordinate,
@@ -235,7 +235,7 @@ class DotMatrix {
         const existingStyleTag = document.querySelector('.dot-matrix-style');
         const letterDotStyleDeclaration = `
             svg {
-                background-color ${this.svgBackgroundColor};
+                background-color: ${this.svgBackgroundColor};
                 display: block;
             }
 

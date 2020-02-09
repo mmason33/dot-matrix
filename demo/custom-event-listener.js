@@ -1,4 +1,4 @@
-function matrixReloadEvent() {
+function matrixReloadEvent(wrapper) {
     document.addEventListener('matrix_reload', (e) => {
         // Performance
         e.preventDefault();

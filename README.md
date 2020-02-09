@@ -5,12 +5,12 @@ DotMatrix.js is a small, performant class-based library. DotMatrix utilizes SVG(
 
 `new DotMatrix(rootSVG, args);`
 
-`rootSVG`
+##### rootSVG
 | property          | type              | default   | optional   |
 | ----------------- |:-----------------:| -----:    | ----------:|
 | rootSvg           | node              | undefined | no         |
 
-`args`
+##### args
 | property          | type              | default   | optional   |
 | ----------------- | ----------------- | -----     | ---------- |
 | height            | number            | undefined | yes        |
@@ -20,19 +20,19 @@ DotMatrix.js is a small, performant class-based library. DotMatrix utilizes SVG(
 | animationDelay    | number/boolean    | 500       | yes        |
 | distanceToFear    | nunber            | 50        | yes        |
 | distanceToStep    | number            | 10        | yes        |
-| dotColorPattern   | string            | random    | yes        |
-| dotFillColor      | string            | black     | yes        |
+| dotColorPattern   | string            | random - options: random, diagonal, vertical, horizontal, fill    | yes        |
+| dotFillColor      | string            | black - options: hex color, color literal     | yes        |
 | dotRadius         | number            | 5         | yes        |
-| dotType           | string            | smart     | yes        |
+| dotType           | string            | smart - options: smart, letter     | yes        |
 | padding           | number            | 30        | yes        |
 | patternColors | array | ['red','orange','yellow','green','cyan','skyblue','blue','indigo','violet','grey']| yes |
 | spacing| number| 30| yes|
-| svgBackgroundColor| string| black| yes|
+| svgBackgroundColor| string| black - options: hex color, color literal | yes|
 | cssClassGoingHome| string| animate_going_home| yes|
 | timing| object| {fromHome: 'ease',backHome: 'ease'}| yes|
 | duration| object| {fromHome: 'ease',backHome: 'ease'}| yes|
 
-**Example**
+##### Example
 ```javascript
 
 // Entry point SVG
@@ -40,7 +40,7 @@ const svg = document.querySelector('.some-svg');
 
 // Full args
 new DotMatrix(
-    document.querySelector('.some-svg'),
+    svg,
     {
         padding: 50,
         spacing: 80,
@@ -116,6 +116,8 @@ new DotMatrix(
 | wordsList         | array             | undefined | no         |
 
 
+**Note: At this time dot classes are not intended to be instantiated outside of the DotMatrix class.**
+
 `new BaseDot(rootSVG, args);`
 | property          | type              | default   | optional   |
 | ----------------- |:-----------------:| -----:    | ----------:|
@@ -142,4 +144,4 @@ new DotMatrix(
 | letterFillColor  | string           | white | yes|
 
 ### Sizing
-Without passing explicit arguments, the DotMatrx will default to **40 columns and 40 rows**. When columns and rows are passed the height and width of the matrix is dynamically calculated.
+Without passing explicit arguments, the DotMatrx will default to **40 columns and 40 rows**. When columns and rows are passed the height and width of the matrix is dynamically calculated. When height and width dimension are passed, columns and rows will be dynamically calculated.

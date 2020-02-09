@@ -12,8 +12,8 @@ class BaseDot {
         // Beginning home coordinates => Object passed by reference so the property values need to referenced and retrieved
         this.coordinates = {
             home: {
-                x: args.homeCoordinate.x.toFixed(8),
-                y: args.homeCoordinate.y.toFixed(8),
+                x: args.homeCoordinate.x,
+                y: args.homeCoordinate.y,
             },
             current: {
                 x: args.homeCoordinate.x,
