@@ -1,7 +1,7 @@
 # DotMatrx.js
 DotMatrix.js is a small, performant class-based library. DotMatrix utilizes SVG(s) instead of canvas for performance and development reasons. SVG(s), CSS3 transitions and JavaScript were used to create the beautiful animations.
 
-## Configurations
+### Configurations
 
 `new DotMatrix(rootSVG, args);`
 
@@ -31,6 +31,83 @@ DotMatrix.js is a small, performant class-based library. DotMatrix utilizes SVG(
 | cssClassGoingHome| string| animate_going_home| yes|
 | timing| object| {fromHome: 'ease',backHome: 'ease'}| yes|
 | duration| object| {fromHome: 'ease',backHome: 'ease'}| yes|
+
+**Example**
+```javascript
+
+// Entry point SVG
+const svg = document.querySelector('.some-svg');
+
+// Full args
+new DotMatrix(
+    document.querySelector('.some-svg'),
+    {
+        padding: 50,
+        spacing: 80,
+        width: 50,
+        height: 50,
+        distanceToFear: 100,
+        distanceToStep: 10,
+        animationDelay: 200,
+        dotRadius: 10,
+        dotType: 'smart',
+        dotFillColor: 'green',
+        letterFillColor: 'white',
+        dotColorPattern: 'diagonal',
+        patternColors: [
+            'red',
+            'orange',
+            'yellow',
+            'green',
+            'cyan',
+            'skyblue',
+            'blue',
+            'indigo',
+            'violet',
+            'lightgray',
+        ],
+        cssClassGoingHome: 'animate_going_home',
+        timing: {
+            fromHome: 'ease',
+            backHome: 'ease',
+        },
+        duration: {
+            fromHome: '0.1s',
+            backHome: '1s',
+        },
+    }
+);
+
+// Height and Width => columns and rows dynamically calculated
+new DotMatrix(
+    svg,
+    {
+        height: 500,
+        width: 500,
+    }
+);
+
+// Columns and Rows => height and width dynamically calculated
+new DotMatrix(
+    svg,
+    {
+        columns: 30,
+        rows: 10,
+    }
+);
+
+// Height and Width take precendent
+new DotMatrix(
+    svg,
+    {
+        height: 500,
+        width: 500,
+        columns: 30,
+        rows: 10,
+    }
+);
+
+```
 
 **LetterDot specific properties**
 | property          | type              | default   | optional   |
@@ -63,3 +140,6 @@ DotMatrix.js is a small, performant class-based library. DotMatrix utilizes SVG(
 | ----------------- |:-----------------:| -----:    | ----------:|
 | dotLetter    | string            | undefined        | no        |
 | letterFillColor  | string           | white | yes|
+
+### Sizing
+Without passing explicit arguments, the DotMatrx will default to **40 columns and 40 rows**. When columns and rows are passed the height and width of the matrix is dynamically calculated.
