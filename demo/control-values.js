@@ -19,7 +19,7 @@ function getControlValues() {
         spacing: updated_spacing,
         padding: updated_padding,
         distanceToFear: updated_fear,
-        delayBeforeGoingHome: updated_delay,
+        animationDelay: updated_delay,
         distanceToStep: updated_step,
         dotRadius: updated_dotRadius,
         dotFillColor: updated_dotFillColor,
@@ -32,7 +32,7 @@ function setControlValues(cleanMatrixObject) {
     spacing.setAttribute('value', cleanMatrixObject.spacing);
     padding.setAttribute('value', cleanMatrixObject.padding);
     fear.setAttribute('value', cleanMatrixObject.distanceToFear);
-    delay.setAttribute('value', cleanMatrixObject.delayBeforeGoingHome);
+    delay.setAttribute('value', cleanMatrixObject.animationDelay);
     step.setAttribute('value', cleanMatrixObject.distanceToStep);
     dotRadius.setAttribute('value', cleanMatrixObject.dotRadius);
 }

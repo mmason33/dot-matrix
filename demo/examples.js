@@ -11,7 +11,7 @@ window.moderate_dots_spacing = {
     svgBackgroundColor: 'white',
     distanceToFear: 100,
     distanceToStep: 30,
-    delayBeforeGoingHome: 200,
+    animationDelay: 200,
     dotRadius: 5,
     dotColorPattern: 'vertical',
     patternColors: [
@@ -47,7 +47,7 @@ window.tenK_smalls_dots = {
     svgBackgroundColor: 'white',
     distanceToFear: 100,
     distanceToStep: 30,
-    delayBeforeGoingHome: 200,
+    animationDelay: 200,
     dotRadius: 2,
     dotColorPattern: 'random',
     patternColors: [
@@ -83,7 +83,7 @@ window.spaced_large_dots = {
     svgBackgroundColor: 'white',
     distanceToFear: 100,
     distanceToStep: 30,
-    delayBeforeGoingHome: 200,
+    animationDelay: 200,
     dotRadius: 50,
     dotColorPattern: 'random',
     patternColors: [
@@ -119,7 +119,7 @@ window.spaced_medium_dots = {
     svgBackgroundColor: 'white',
     distanceToFear: 50,
     distanceToStep: 30,
-    delayBeforeGoingHome: 200,
+    animationDelay: 200,
     dotRadius: 20,
     dotColorPattern: 'horizontal',
     patternColors: [
@@ -155,7 +155,7 @@ window.dense_group = {
     svgBackgroundColor: 'white',
     distanceToFear: 25,
     distanceToStep: 10,
-    delayBeforeGoingHome: 200,
+    animationDelay: 200,
     dotRadius: 20,
     dotColorPattern: 'diagonal',
     patternColors: [

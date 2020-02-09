@@ -57,7 +57,7 @@
         <script src="src/coordinate-translator.js"></script>
         <script src="src/base-dot.js"></script>
         <script src="src/smart-dot.js"></script>
-        <script src="src/text-dot.js"></script>
+        <script src="src/letter-dot.js"></script>
         <script src="src/dot-matrix.js"></script>
         <script src="demo/examples.js"></script>
         <script src="demo/demo-dimensions.js"></script>
@@ -101,13 +101,16 @@
                     document.querySelector('.dot-matrix'),
                     {
                         padding: 50,
-                        spacing: 30,
+                        spacing: 80,
                         width: window.adjustedWidth,
                         height: window.innerHeight,
                         distanceToFear: 100,
                         distanceToStep: 10,
-                        delayBeforeGoingHome: 200,
-                        dotRadius: 5,
+                        animationDelay: 200,
+                        dotRadius: 10,
+                        dotType: 'smart',
+                        dotFillColor: 'green',
+                        letterFillColor: 'white',
                         dotColorPattern: 'diagonal',
                         patternColors: [
                             'red',
@@ -197,7 +200,7 @@
                         dotColorPattern: !!values.dotFillColor ? 'fill' : 'diagonal',
                         distanceToFear: values.distanceToFear,
                         distanceToStep: values.distanceToStep,
-                        delayBeforeGoingHome: !!values.delayBeforeGoingHome === false ? false : values.delayBeforeGoingHome,
+                        animationDelay: !!values.animationDelay === false ? false : values.animationDelay,
                         cssClassGoingHome: 'animate_going_home',
                         timing: {
                             fromHome: 'ease',

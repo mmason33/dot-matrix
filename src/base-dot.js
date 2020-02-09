@@ -2,25 +2,28 @@ class BaseDot {
     constructor(svg, args) {
         this.svg = svg;
         this.dotRadius = args.dotRadius;
-        this.dotFillColor = args.dotFillColor
-        this.UNIQUE_IDENTIFIER = args.UNIQUE_IDENTIFIER;
-        this.IS_DESKTOP = args.IS_DESKTOP;
-        this.EVENT_TYPE = this.IS_DESKTOP ? 'mousemove' : 'touchmove';
+        this.dotFillColor = args.dotFillColor;
+        this.distanceToFear = args.distanceToFear;
+        this.animationDelay = args.animationDelay;
+        this.uniqueIdentifier = args.uniqueIdentifier;
+        this.isDesktop = args.isDesktop;
+        this.eventType = this.isDesktop ? 'mousemove' : 'touchmove';
 
         // Beginning home coordinates => Object passed by reference so the property values need to referenced and retrieved
         this.coordinates = {
             home: {
-                x: args.HOME_COORDINATE.x.toFixed(8),
-                y: args.HOME_COORDINATE.y.toFixed(8),
+                x: args.homeCoordinate.x.toFixed(8),
+                y: args.homeCoordinate.y.toFixed(8),
             },
             current: {
-                x: args.HOME_COORDINATE.x,
-                y: args.HOME_COORDINATE.y,
+                x: args.homeCoordinate.x,
+                y: args.homeCoordinate.y,
             },
         };
 
         this.insertOnDOM();
         this.addEventListeners();
+        this.onMouseLeave();
     }
 
     insertOnDOM() {
@@ -40,35 +43,20 @@ class BaseDot {
     }
 
     addEventListeners() {
-        const methodName = `delegate_${this.EVENT_TYPE}`;
-        this.svg.addEventListener(this.EVENT_TYPE, this[methodName].bind(this), false);
+        const methodName = `delegate_${this.eventType}`;
+        this.svg.addEventListener(this.eventType, this[methodName].bind(this), false);
     }
 
     respondToInput(coordinate, callbackObject) {
         // Static method
-        const vector_from_mouse_to_me = (new CoordinateTranslator).setCenterCoordinate(coordinate).getVectorToPoint(this.coordinates.current);
-        console.log(this.isMouseNearMe(vector_from_mouse_to_me));
-        if (!this.isMouseNearMe(vector_from_mouse_to_me)) {
+        this.vector_from_mouse_to_me = (new CoordinateTranslator).setCenterCoordinate(coordinate).getVectorToPoint(this.coordinates.current);
+
+        if (!this.isMouseNearMe(this.vector_from_mouse_to_me)) {
             callbackObject.baseState();
             return false;
         }
 
-        callbackObject.textState();
-
-        // this.dot.classList.remove(this.cssClassGoingHome);
-
-        // //  Get Where I Should Go - Absolute Position
-        // const move_to_coords_absolute = (new CoordinateTranslator)
-        //     .setCenterCoordinate(this.coordinates.current)
-        //     .fromPolar(this.distanceToStep, vector_from_mouse_to_me.degrees);
-
-        // //  Get Deltas between current coordinate and home - Relative Position
-        // const move_to_coords_relative = (new CoordinateTranslator)
-        //     .setCenterCoordinate(this.coordinates.home)
-        //     .getVectorToPoint(move_to_coords_absolute);
-
-        // //  Make the change happen on the DOM
-        // this.setWhereIShouldBe(move_to_coords_relative, move_to_coords_absolute);
+        callbackObject.alteredState();
     }
 
     isMouseNearMe(vector_from_mouse_to_me) {
@@ -76,5 +64,11 @@ class BaseDot {
             return true;
         }
         return false;
+    }
+
+    onMouseLeave() {
+        this.svg.addEventListener('mouseleave', () => {
+            this.baseState();
+        });
     }
 }

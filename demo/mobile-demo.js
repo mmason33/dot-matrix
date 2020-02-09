@@ -19,7 +19,7 @@ function mobileDemo({
             dotColorPattern: 'diagonal',
             distanceToFear: 30,
             distanceToStep: 15,
-            delayBeforeGoingHome: 300,
+            animationDelay: 300,
             cssClassGoingHome: 'animate_going_home',
             timing: {
                 fromHome: 'ease',
